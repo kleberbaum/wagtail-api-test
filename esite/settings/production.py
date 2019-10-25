@@ -64,6 +64,7 @@ EMAIL_PORT = int(os.getenv('EMAIL_HOST', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
+# Rquired for notification emails
 BASE_URL = os.getenv('DJANGO_ALLOWED_HOSTS', 'http://localhost:8000')
 
 #> Database definition
@@ -71,6 +72,13 @@ BASE_URL = os.getenv('DJANGO_ALLOWED_HOSTS', 'http://localhost:8000')
 # See https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+#> AWS
+# AWS may be used for Elasticsearch and/or S3
+# See https://wagtail.io/blog/amazon-s3-for-media-files/ 
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+AWS_REGION = os.getenv('AWS_REGION', '')
 
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
