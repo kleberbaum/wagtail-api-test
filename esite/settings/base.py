@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     # Third party apps
     'corsheaders',
     'django_filters',
-    
+    'modelcluster',
 
     # Django core apps
     'django.contrib.admin',
