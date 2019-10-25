@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_filters',
     'modelcluster',
     'taggit',
+    'wagtailfontawesome',
 
     # Django core apps
     'django.contrib.admin',
