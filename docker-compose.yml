@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+#> PostgreSQL
+    db:
+        image: postgres:12-alpine
+        environment:
+            - POSTGRES_DB=app_db
+            - POSTGRES_USER=app_user
+            - POSTGRES_PASSWORD=changeme
+        restart: always
+
+#> Django
+    app:
+        build: .
+        environment:
+            - "DJANGO_SECRET_KEY=changeme"
+            - "DATABASE_URL=postgres://app_user:changeme@db/app_db"
+        links:
+            - "db:db"
+        ports:
+            - "50000:8000/tcp"
+        depends_on:
+            - "db"
+
+# SPDX-License-Identifier: (EUPL-1.2)
+# Copyright © 2019 Werbeagentur Christian Aichner
