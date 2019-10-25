@@ -25,9 +25,26 @@ INSTALLED_APPS = [
     'esite.core',
     'esite.home',
 
+    # Wagtail core apps
+    'wagtail.contrib.search_promotions',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.routable_page',
+    'wagtail.core',
+
     # Third party apps
     'corsheaders',
     'django_filters',
+    
 
     # Django core apps
     'django.contrib.admin',
@@ -54,6 +71,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Wagtail core middleware
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 #> CORS origin
@@ -169,6 +190,18 @@ STATIC_URL = '/static/'
 # See https://docs.djangoproject.com/en/2.2/ref/settings/#media-root
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+#> Wagtail definition
+# The external service Elasticsearch is used search.
+# See http://docs.wagtail.io/en/v2.6.3/topics/search/backends.html
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+        'INDEX': 'esite',
+    },
+}
+
+WAGTAIL_SITE_NAME = "esite"
 
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
