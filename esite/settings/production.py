@@ -64,6 +64,8 @@ EMAIL_PORT = int(os.getenv('EMAIL_HOST', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
+BASE_URL = os.getenv('DJANGO_ALLOWED_HOSTS', 'http://localhost:8000')
+
 #> Database definition
 # See https://pypi.org/project/dj-database-url/
 # See https://docs.djangoproject.com/en/2.2/ref/settings/#databases
