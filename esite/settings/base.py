@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'modelcluster',
+    'taggit',
 
     # Django core apps
     'django.contrib.admin',
