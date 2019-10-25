@@ -37,6 +37,15 @@ else:
     print("WARNING: DJANGO_SECRET_KEY not found in os.environ. Generating ephemeral SECRET_KEY.")
     SECRET_KEY = ''.join([random.SystemRandom().choice(string.printable) for i in range(50)])
 
+#> SSL Header
+# Used to detect secure connection proberly on Heroku.
+# See https://wagtail.io/blog/deploying-wagtail-heroku/
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+#> SSL Redirect
+# Every rquest gets redirected to HTTPS
+SECURE_SSL_REDIRECT = os.getenv('DJANGO_SECURE_SSL_REDIRECT', 'off') == 'on'
+
 #> Allowed hosts
 # Accept all hostnames, since we don't know in advance
 # which hostname will be used for any given Docker instance.
