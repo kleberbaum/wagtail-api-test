@@ -134,6 +134,16 @@ if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
     INSTALLED_APPS.append('storages')
     MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    
+
+# Configure OS_BUCKET if it is in os enviroment
+if 'GS_BUCKET_NAME' in os.environ:
+    GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+    GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
+    GS_DEFAULT_ACL = 'publicRead'
+    GS_AUTO_CREATE_BUCKET = True
+
+    INSTALLED_APPS.append('storages')
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
