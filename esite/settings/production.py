@@ -80,5 +80,46 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 AWS_REGION = os.getenv('AWS_REGION', '')
 
+# Configure caches from cache url 
+CACHES = {'default': django_cache_url.config()}
+
+#> Elasticsearch
+# Configure Elastisearch if it is in os enviroment
+ELASTICSEARCH_ENDPOINT = os.getenv('ELASTICSEARCH_ENDPOINT', '')
+
+if ELASTICSEARCH_ENDPOINT:
+    from elasticsearch import RequestsHttpConnection
+    WAGTAILSEARCH_BACKENDS = {
+        'default': {
+            'BACKEND': 'wagtail.search.backends.elasticsearch2',
+            'HOSTS': [{
+                'host': ELASTICSEARCH_ENDPOINT,
+                'port': int(os.getenv('ELASTICSEARCH_PORT', '9200')),
+                'use_ssl': os.getenv('ELASTICSEARCH_USE_SSL', 'off') == 'on',
+                'verify_certs': os.getenv('ELASTICSEARCH_VERIFY_CERTS', 'off') == 'on',
+            }],
+            'OPTIONS': {
+                'connection_class': RequestsHttpConnection,
+            },
+        }
+    }
+    if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+        from aws_requests_auth.aws_auth import AWSRequestsAuth
+        WAGTAILSEARCH_BACKENDS['default']['HOSTS'][0]['http_auth'] = AWSRequestsAuth(
+            aws_access_key=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            aws_token=os.getenv('AWS_SESSION_TOKEN', ''),
+            aws_host=ELASTICSEARCH_ENDPOINT,
+            aws_region=AWS_REGION,
+            aws_service='es',
+        )
+    elif AWS_REGION:
+        from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+        WAGTAILSEARCH_BACKENDS['default']['HOSTS'][0]['http_auth'] = BotoAWSRequestsAuth(
+            aws_host=ELASTICSEARCH_ENDPOINT,
+            aws_region=AWS_REGION,
+            aws_service='es',
+        )
+
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
