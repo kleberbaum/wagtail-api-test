@@ -125,5 +125,15 @@ if ELASTICSEARCH_ENDPOINT:
 MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Configure AWS_STORAGE_BUCKET if it is in os enviroment
+if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_AUTO_CREATE_BUCKET = True
+
+    INSTALLED_APPS.append('storages')
+    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
