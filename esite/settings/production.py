@@ -121,5 +121,9 @@ if ELASTICSEARCH_ENDPOINT:
             aws_service='es',
         )
 
+# Add whitenoise
+MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
