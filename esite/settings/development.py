@@ -34,5 +34,10 @@ ALLOWED_HOSTS = '*'
 # See https://docs.djangoproject.com/en/2.2/topics/email/#console-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+#> Set Base_Url
+# Set the base url, needed to acces wagtail.
+# See https://docs.wagtail.io/en/v0.8.10/howto/settings.html
+BASE_URL = 'http://localhost:8000'
+
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner

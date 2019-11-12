@@ -37,6 +37,15 @@ else:
     print("WARNING: DJANGO_SECRET_KEY not found in os.environ. Generating ephemeral SECRET_KEY.")
     SECRET_KEY = ''.join([random.SystemRandom().choice(string.printable) for i in range(50)])
 
+#> SSL Header
+# Used to detect secure connection proberly on Heroku.
+# See https://wagtail.io/blog/deploying-wagtail-heroku/
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+#> SSL Redirect
+# Every rquest gets redirected to HTTPS
+SECURE_SSL_REDIRECT = os.getenv('DJANGO_SECURE_SSL_REDIRECT', 'off') == 'on'
+
 #> Allowed hosts
 # Accept all hostnames, since we don't know in advance
 # which hostname will be used for any given Docker instance.
@@ -55,11 +64,102 @@ EMAIL_PORT = int(os.getenv('EMAIL_HOST', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
+# Rquired for notification emails
+BASE_URL = os.getenv('DJANGO_ALLOWED_HOSTS', 'http://localhost:8000')
+
 #> Database definition
 # See https://pypi.org/project/dj-database-url/
 # See https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
+#> AWS
+# AWS may be used for Elasticsearch and/or S3
+# See https://wagtail.io/blog/amazon-s3-for-media-files/ 
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+AWS_REGION = os.getenv('AWS_REGION', '')
+
+# Configure caches from cache url 
+CACHES = {'default': django_cache_url.config()}
+
+#> Elasticsearch
+# Configure Elastisearch if it is in os enviroment
+ELASTICSEARCH_ENDPOINT = os.getenv('ELASTICSEARCH_ENDPOINT', '')
+
+if ELASTICSEARCH_ENDPOINT:
+    from elasticsearch import RequestsHttpConnection
+    WAGTAILSEARCH_BACKENDS = {
+        'default': {
+            'BACKEND': 'wagtail.search.backends.elasticsearch2',
+            'HOSTS': [{
+                'host': ELASTICSEARCH_ENDPOINT,
+                'port': int(os.getenv('ELASTICSEARCH_PORT', '9200')),
+                'use_ssl': os.getenv('ELASTICSEARCH_USE_SSL', 'off') == 'on',
+                'verify_certs': os.getenv('ELASTICSEARCH_VERIFY_CERTS', 'off') == 'on',
+            }],
+            'OPTIONS': {
+                'connection_class': RequestsHttpConnection,
+            },
+        }
+    }
+    if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+        from aws_requests_auth.aws_auth import AWSRequestsAuth
+        WAGTAILSEARCH_BACKENDS['default']['HOSTS'][0]['http_auth'] = AWSRequestsAuth(
+            aws_access_key=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            aws_token=os.getenv('AWS_SESSION_TOKEN', ''),
+            aws_host=ELASTICSEARCH_ENDPOINT,
+            aws_region=AWS_REGION,
+            aws_service='es',
+        )
+    elif AWS_REGION:
+        from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+        WAGTAILSEARCH_BACKENDS['default']['HOSTS'][0]['http_auth'] = BotoAWSRequestsAuth(
+            aws_host=ELASTICSEARCH_ENDPOINT,
+            aws_region=AWS_REGION,
+            aws_service='es',
+        )
+
+# Add whitenoise
+MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configure AWS_STORAGE_BUCKET if it is in os enviroment
+if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_AUTO_CREATE_BUCKET = True
+
+    INSTALLED_APPS.append('storages')
+    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Configure OS_BUCKET if it is in os enviroment
+if 'GS_BUCKET_NAME' in os.environ:
+    GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+    GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
+    GS_DEFAULT_ACL = 'publicRead'
+    GS_AUTO_CREATE_BUCKET = True
+
+    INSTALLED_APPS.append('storages')
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+# Create logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2019 Werbeagentur Christian Aichner
