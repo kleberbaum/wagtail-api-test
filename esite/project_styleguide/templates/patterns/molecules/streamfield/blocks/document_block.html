@@ -1,0 +1,18 @@
+<div class="card card-document border-0 my-2">
+    <div class="card-icon m-2 position-absolute text-primary">
+        <svg>
+            <use xlink:href="#save"></use>
+        </svg>
+    </div>
+    <div class="card-body ml-5 py-2">
+        <h5>
+
+            <a href="{{ value.document.url }}" class="stretched-link">
+                {{ value.title|default:value.document.title }}
+            </a>
+        </h5>
+        {% if value.document.description %}
+            {{ value.document.description }}
+        {% endif %}
+    </div>
+</div>

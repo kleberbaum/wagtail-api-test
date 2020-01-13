@@ -27,45 +27,45 @@ ADD requirements/ /requirements/
 
 # Update, install and cleaning:
 RUN echo "## Installing base ##" && \
-	echo "@main http://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
-	echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-	echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
-	apk upgrade --update-cache --available && \
-	\
-    apk add --no-cache --virtual .build-deps \
-        gcc \
-        g++ \
-        make \
-        libc-dev \
-        musl-dev \
-        linux-headers \
-        pcre-dev \
-        postgresql-dev \
-        libjpeg-turbo-dev \
-        zlib-dev \
-        expat-dev \
-	;\
-    apk add --force \
-		git@main \
-		bash@main \
-		libjpeg-turbo@main \
-		pcre@main \
-		postgresql-client@main \
-        tini@community \
-	\
-	&& python -m venv /venv \
-	&& /venv/bin/pip install -U pip \
-	&& LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/venv/bin/pip install -r /requirements/production.txt" \
-	&& runDeps="$( \
-	    scanelf --needed --nobanner --recursive /venv \
-	        | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
-	        | sort -u \
-	        | xargs -r apk info --installed \
-	        | sort -u \
-	)" \
-	&& apk add --virtual .python-rundeps $runDeps \
-	&& apk del .build-deps \
-	&& rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+		echo "@main http://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories && \
+		echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
+		echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
+		apk upgrade --update-cache --available && \
+		\
+		apk add --no-cache --virtual .build-deps \
+				gcc \
+				g++ \
+				make \
+				libc-dev \
+				musl-dev \
+				linux-headers \
+				pcre-dev \
+				postgresql-dev \
+				libjpeg-turbo-dev \
+				zlib-dev \
+				expat-dev \
+		;\
+		apk add --force \
+				git \
+				bash \
+				libjpeg-turbo\
+				pcre \
+				postgresql-client \
+				tini@community \
+		\
+		&& python -m venv /venv \
+		&& /venv/bin/pip install -U pip \
+		&& LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/venv/bin/pip install -r /requirements/production.txt" \
+		&& runDeps="$( \
+				scanelf --needed --nobanner --recursive /venv \
+						| awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+						| sort -u \
+						| xargs -r apk info --installed \
+						| sort -u \
+		)" \
+		&& apk add --virtual .python-rundeps $runDeps \
+		&& apk del .build-deps \
+		&& rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
 EXPOSE 8000
 
@@ -94,4 +94,5 @@ CMD ["/venv/bin/uwsgi", "--http-auto-chunked", \
 ]
 
 # SPDX-License-Identifier: (EUPL-1.2)
-# Copyright © 2019 Werbeagentur Christian Aichner
+# Copyright  2019 Werbeagentur Christian Aichner
+

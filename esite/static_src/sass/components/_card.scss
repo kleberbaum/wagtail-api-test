@@ -1,0 +1,39 @@
+.card {
+    background-color: $color--tertiary;
+    border: none;  // override bootstrap
+    border-radius: 0;  // override bootstrap
+    transition: background-color $transition;
+
+    &:hover {
+        background-color: darken($color--tertiary, 10%);
+	}
+}
+
+.card-with-image {
+    &:only-child {
+        max-width: 260px;
+	}
+}
+
+// override bootstrap
+
+.card-body {
+	padding: 0;
+}
+
+.card-img-top {
+	border-radius: 0;
+}
+
+.card-link {
+	color: $color--quarternary;
+	padding: 30px 0;
+}
+
+.card:hover {
+    background-color: $color--white;
+
+    h3 {
+        color: lighten($color--quarternary, 20%);
+    }
+}

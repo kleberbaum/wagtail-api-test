@@ -1,0 +1,28 @@
+<button class="color " {valueElement: '
+{{ attrs.id }}' , onFineChange: 'setTextColor(this)' }>
+    Pick text color
+</button>
+
+HEX value: <input {% if value %}value="{{ value }}" {% else %}value="000000" {% endif %} type="text" name="{{ name }}"
+    id="{{ attrs.id }}" {% if is_required %}required {% endif %}style="{{ attrs.style }}" />
+
+
+<div style="
+width:50%;
+height:50%;
+border-radius:2rem;
+border-color:black;
+border-width:.1rem;
+text-align:center;
+background-color:grey;
+margin-left:auto;
+margin-right:auto;
+">
+    <h1 id="title-color">MY TITLE IN COLOR</h1>
+</div>
+
+<script>
+    function setTextColor(picker) {
+        document.getElementById('title-color').style.color = '#' + picker.toString()
+    }
+</script>
