@@ -145,18 +145,19 @@ class RegistrationFormPage(AbstractEmailForm):
             registration_data=registration_data,
         )
 
-        parent_page = Page.objects.get(slug='home').specific
+        user.set_password(password)
+        user.save()
+
+        parent_page = Page.objects.get(url_path="/registration").specific
 
         profile_page = ProfilePage(
             title=f"{user.username}"
-            # first_name = "fff"
         )
 
         parent_page.add_child(instance=profile_page)
-        profile_page.save_revision().publish()
 
-        user.set_password(password)
-        user.save()
+        
+        profile_page.save_revision().publish()
 
         return user
 
