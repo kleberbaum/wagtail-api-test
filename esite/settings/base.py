@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'esite.user',
     'esite.customer',
     'esite.home',
+    'esite.profile',
     'esite.caching',
     #'esite.charm',
     #'esite.articles',
@@ -207,6 +208,7 @@ WAGTAILSEARCH_BACKENDS = {
 GRAPHQL_API = {
     'APPS': [
         'home',
+        'profile',
         'registration',
         'survey',
     ],

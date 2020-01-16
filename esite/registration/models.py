@@ -10,13 +10,16 @@ from wagtail.admin.edit_handlers import (
     InlinePanel, MultiFieldPanel
 )
 from wagtail.core import blocks
+from wagtail.core.models import Page
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, InlinePanel, StreamFieldPanel, MultiFieldPanel, FieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField, AbstractFormSubmission
 from wagtail.contrib.forms.models import AbstractForm, AbstractFormField, AbstractEmailForm, AbstractFormField, AbstractFormSubmission
 from wagtail.admin.utils import send_mail
+
 from esite.user.models import User
+from esite.profile.models import ProfilePage
 
 # Create your registration related models here.
 
@@ -141,6 +144,16 @@ class RegistrationFormPage(AbstractEmailForm):
             verified=verified,
             registration_data=registration_data,
         )
+
+        parent_page = Page.objects.get(slug='home').specific
+
+        profile_page = ProfilePage(
+            title=f"{user.username}"
+            # first_name = "fff"
+        )
+
+        parent_page.add_child(instance=profile_page)
+        profile_page.save_revision().publish()
 
         user.set_password(password)
         user.save()
