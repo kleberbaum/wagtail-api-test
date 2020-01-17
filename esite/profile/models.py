@@ -105,6 +105,7 @@ class Platform(blocks.StructBlock):
 
 #> Profilepage
 class ProfilePage(Page):
+    sources = models.TextField(null=True, blank=False)
     platform_data = models.TextField(null=True, blank=True)
     verified = models.BooleanField(blank=True, default=False)
     available_for_hire = models.BooleanField(blank=True, default=False)
@@ -143,8 +144,8 @@ class ProfilePage(Page):
     #]
 
     data_panels = [
-        FieldPanel('platform_data'),
         FieldPanel('sources'),
+        FieldPanel('platform_data'),
     ]
 
     main_content_panels = [
