@@ -155,7 +155,7 @@ if 'DJANGO_EMAIL_HOST_USER' in env:
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-host-password
 if 'DJANGO_EMAIL_HOST_PASSWORD' in env:
-    EMAIL_HOST_PASSWORD = env['EMAIL_HOST_PASSWORD']
+    EMAIL_HOST_PASSWORD = env['DJANGO_EMAIL_HOST_PASSWORD']
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-use-tls
