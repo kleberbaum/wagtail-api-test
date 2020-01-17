@@ -155,7 +155,9 @@ class RegistrationFormPage(AbstractEmailForm):
         parent_page = Page.objects.get(url_path="/home/registration/").specific
 
         profile_page = ProfilePage(
-            title=f"{user.username}"
+            title=f"{user.username}",
+            username=f"{user.username}",
+            sources=f"{user.username}",
         )
 
         parent_page.add_child(instance=profile_page)

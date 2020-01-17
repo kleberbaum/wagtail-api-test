@@ -88,6 +88,7 @@ class Organization(blocks.StructBlock):
     ], null=True, blank=True, max_num=8)
 
 class Platform(blocks.StructBlock):
+    sources = models.TextField(null=True, blank=False)
     platformName = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
     platformUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
     avatarUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
@@ -143,6 +144,7 @@ class ProfilePage(Page):
 
     data_panels = [
         FieldPanel('platform_data'),
+        FieldPanel('sources'),
     ]
 
     main_content_panels = [
