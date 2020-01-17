@@ -22,8 +22,8 @@ class UserAdmin(ModelAdmin):
 #modeladmin_register(UserAdmin)
 
 class CustomerAdminB(ModelAdminGroup):
-    menu_label = "Shopify"
-    menu_icon = "fa-shopping-basket"
+    menu_label = "User Management"
+    menu_icon = "group"
     menu_order = 110
     add_to_settings_menu = False
     exclude_from_explorer = False
