@@ -104,6 +104,7 @@ class Platform(blocks.StructBlock):
 
 #> Profilepage
 class ProfilePage(Page):
+    platform_data = models.TextField(null=True, blank=True)
     verified = models.BooleanField(blank=True, default=False)
     available_for_hire = models.BooleanField(blank=True, default=False)
     username = models.CharField(null=True, blank=True, error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 36 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=36, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')
@@ -140,6 +141,10 @@ class ProfilePage(Page):
     #    GraphQLStreamfield("sections"),
     #]
 
+    data_panels = [
+        FieldPanel('platform_data'),
+    ]
+
     main_content_panels = [
         MultiFieldPanel(
             [
@@ -167,5 +172,5 @@ class ProfilePage(Page):
 
     edit_handler = TabbedInterface([
         ObjectList(Page.content_panels + main_content_panels, heading='Overview'),
-        ObjectList(Page.promote_panels + Page.settings_panels, heading='Settings', classname="settings")
+        ObjectList(data_panels + Page.promote_panels + Page.settings_panels, heading='Settings', classname="settings")
     ])

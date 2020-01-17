@@ -129,6 +129,7 @@ class RegistrationFormPage(AbstractEmailForm):
         user = get_user_model()(
             username=username,
             is_customer=True,
+            is_active = False,
             customer_id=customer_id,
             birthdate=birthdate,
             telephone=telephone,

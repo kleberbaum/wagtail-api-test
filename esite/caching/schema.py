@@ -35,10 +35,10 @@ class CacheUser(graphene.Mutation):
 
         user.save()
 
-        profile_page = Page.objects.get(url_path=f"/home/registration/{user.username}/").specific
+        profile_page = Page.objects.get(slug=f"{user.username}").specific
 
-        profile_page.username = "page caching is working"
-        
+        profile_page.platform_data = platform_data
+
         profile_page.save_revision().publish()
 
         return CacheUser(user=user)
