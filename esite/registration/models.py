@@ -157,7 +157,7 @@ class RegistrationFormPage(AbstractEmailForm):
         profile_page = ProfilePage(
             title=f"{user.username}",
             username=f"{user.username}",
-            sources=f"{user.username}",
+            sources=f"{user.sources}",
         )
 
         parent_page.add_child(instance=profile_page)
