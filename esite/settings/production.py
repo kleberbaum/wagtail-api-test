@@ -136,41 +136,41 @@ if env.get('SECURE_CONTENT_TYPE_NOSNIFF', 'true').lower().strip() == 'true':
 # https://docs.djangoproject.com/en/2.1/topics/email/
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-host
-if 'EMAIL_HOST' in env:
-    EMAIL_HOST = env['EMAIL_HOST']
+if 'DJANGO_EMAIL_HOST' in env:
+    EMAIL_HOST = env['DJANGO_EMAIL_HOST']
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-port
-if 'EMAIL_PORT' in env:
+if 'DJANGO_EMAIL_PORT' in env:
     try:
-        EMAIL_PORT = int(env['EMAIL_PORT'])
+        EMAIL_PORT = int(env['DJANGO_EMAIL_PORT'])
     except ValueError:
         pass
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-host-user
-if 'EMAIL_HOST_USER' in env:
-    EMAIL_HOST_USER = env['EMAIL_HOST_USER']
+if 'DJANGO_EMAIL_HOST_USER' in env:
+    EMAIL_HOST_USER = env['DJANGO_EMAIL_HOST_USER']
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-host-password
-if 'EMAIL_HOST_PASSWORD' in env:
+if 'DJANGO_EMAIL_HOST_PASSWORD' in env:
     EMAIL_HOST_PASSWORD = env['EMAIL_HOST_PASSWORD']
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-use-tls
-if env.get('EMAIL_USE_TLS', 'false').lower().strip() == 'true':
+if env.get('DJANGO_EMAIL_USE_TLS', 'false').lower().strip() == 'true':
     EMAIL_USE_TLS = True
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-use-ssl
-if env.get('EMAIL_USE_SSL', 'false').lower().strip() == 'true':
+if env.get('DJANGO_EMAIL_USE_SSL', 'false').lower().strip() == 'true':
     EMAIL_USE_SSL = True
 
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#email-subject-prefix
-if 'EMAIL_SUBJECT_PREFIX' in env:
-    EMAIL_SUBJECT_PREFIX = env['EMAIL_SUBJECT_PREFIX']
+if 'DJANGO_EMAIL_SUBJECT_PREFIX' in env:
+    EMAIL_SUBJECT_PREFIX = env['DJANGO_EMAIL_SUBJECT_PREFIX']
 
 
 # SERVER_EMAIL is used to send emails to administrators.
@@ -178,8 +178,8 @@ if 'EMAIL_SUBJECT_PREFIX' in env:
 # DEFAULT_FROM_EMAIL is used as a default for any mail send from the website to
 # the users.
 # https://docs.djangoproject.com/en/stable/ref/settings/#default-from-email
-if 'SERVER_EMAIL' in env:
-    SERVER_EMAIL = DEFAULT_FROM_EMAIL = env['SERVER_EMAIL']
+if 'DJANGO_SERVER_EMAIL' in env:
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL = env['DJANGO_SERVER_EMAIL']
 
 
 #> Database definition
