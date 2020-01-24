@@ -131,18 +131,6 @@ class RegistrationFormPage(AbstractEmailForm):
             is_customer=True,
             is_active = False,
             customer_id=customer_id,
-            birthdate=birthdate,
-            telephone=telephone,
-            address=address,
-            city=city,
-            postal_code=postal_code,
-            email=email,
-            country=country,
-            newsletter=newsletter,
-            platform_data=platform_data,
-            education_data=education_data,
-            sources=sources,
-            verified=verified,
             registration_data=registration_data,
         )
 
@@ -155,9 +143,24 @@ class RegistrationFormPage(AbstractEmailForm):
         parent_page = Page.objects.get(url_path="/home/registration/").specific
 
         profile_page = ProfilePage(
-            title=f"{user.username}",
-            username=f"{user.username}",
-            sources=f"{user.sources}",
+            username = f"{user.username}",
+            birthdate=birthdate,
+            telephone=telephone,
+            address=address,
+            city=city,
+            postal_code=postal_code,
+            email=email,
+            country=country,
+            newsletter=newsletter,
+            platform_data=registration_data,
+            education_data=education_data,
+            sources=sources,
+            verified=verified,
+            available_for_hire = verified,
+            first_name = f"f",
+            last_name = f"f",
+            website = f"f",
+            company = f"f",
         )
 
         parent_page.add_child(instance=profile_page)
