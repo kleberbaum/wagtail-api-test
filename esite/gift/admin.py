@@ -13,7 +13,7 @@ class GiftAdmin(ModelAdmin):
     exclude_from_explorer = False
 
     # Listed in the registration overview
-    list_display = ('hkey', 'bid', 'tid')
-    search_fields = ('hkey', 'bid', 'tid')
+    list_display = ('active', 'hkey', 'bid', 'tid')
+    search_fields = ('active', 'hkey', 'bid', 'tid')
 
 modeladmin_register(GiftAdmin)

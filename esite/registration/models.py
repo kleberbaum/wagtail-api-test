@@ -167,13 +167,16 @@ class RegistrationFormPage(AbstractEmailForm):
             company=f"f"
         )
         if gift:
-            if gift.bid:
-                parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
+            if gift.is_active:
+                if gift.bid:
+                    parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
 
-            if gift.tid:
-                parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
-        
-        parent_page.verified = True
+                if gift.tid:
+                    parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
+
+                gift.is_active = False
+                gift.save()
+                parent_page.verified = True
 
         parent_page.add_child(instance=profile_page)
 

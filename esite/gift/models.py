@@ -15,6 +15,7 @@ class GiftCode(models.Model):
     hkey = models.CharField(primary_key=True, max_length=14)
     bid = models.CharField(null=True, blank=True, max_length=32, validators=[RegexValidator(regex='^[a-f0-9]{32}$', message='It has to be a md5 hash', code='nomatch')])
     tid = models.CharField(null=True, blank=True, max_length=32, validators=[RegexValidator(regex='^[a-f0-9]{32}$', message='It has to be a md5 hash', code='nomatch')])
+    is_active = models.BooleanField(null=False, blank=False, default=True)
 
     panels = [
         FieldPanel('hkey'),
