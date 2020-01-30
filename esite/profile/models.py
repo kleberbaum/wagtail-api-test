@@ -26,66 +26,12 @@ from esite.colorfield.blocks import ColorBlock, ColorAlphaBlock, GradientColorBl
 
 # Create your homepage related models here.
 
-class Language(blocks.StructBlock):
-    color = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-    name = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-    size = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
-    share = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
-
-class Languages(blocks.StructBlock):
-    total = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
-    slices = blocks.StreamBlock([
-        ('Language', Language(null=True, blank=True, icon='cogs'))
-    ], null=True, blank=True, max_num=8)
-
 class _S_TopLanguages(blocks.StructBlock):
-    slices = blocks.StreamBlock([
-        ('Language', Language(null=True, blank=True, icon='cogs'))
-    ], null=True, blank=True, max_num=8)
-
-class Day(blocks.StructBlock):
-    Date = blocks.DateBlock(null=True, blank=True)
-    total = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
-
-class Streak(blocks.StructBlock):
-    startDate = blocks.DateBlock(null=True, blank=True)
-    endDate = blocks.DateBlock(null=True, blank=True)
-    total = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
+    theme = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=64)
 
 class _S_Calendar(blocks.StructBlock):
-    total = blocks.IntegerBlock(null=True, blank=True, help_text="Bold header text")
-    busiest_day = Day(null=True, blank=True)
-    longest_streak = Streak(null=True, blank=True)
-    current_streak = Streak(null=True, blank=True)
-    calendar = blocks.TextBlock(null=True, blank=True)
+    theme = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=64)
 
-class Contribution(blocks.StructBlock):
-    datetime = blocks.DateBlock(null=True, blank=True)
-    nameWithOwner = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-    repoUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    type = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-
-class Statistic(blocks.StructBlock):
-    year = blocks.IntegerBlock(null=True, blank=True)
-
-class Repository(blocks.StructBlock):
-    avatarUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    url = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    name = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-
-class Member(blocks.StructBlock):
-    avatarUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    url = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    fullname = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-    username = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-
-class Organization(blocks.StructBlock):
-    avatarUrl = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    url = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=2048)
-    name = blocks.CharBlock(null=True, blank=True, help_text="Bold header text", max_length=80)
-    members = blocks.StreamBlock([
-        ('member', Member(null=True, blank=True, icon='cogs'))
-    ], null=True, blank=True, max_num=8)
 
 class Platform(blocks.StructBlock):
     sources = models.TextField(null=True, blank=False)
@@ -121,20 +67,9 @@ class ProfilePage(Page):
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
     company = models.CharField(null=True, blank=True, max_length=80)
-    platforms = StreamField([
-        ('platform', Platform(null=True, blank=True, icon='fa-instagram')),  
-    ], null=True, blank=True)
-    organizations = StreamField([
-        ('organization', Organization(null=True, blank=True, icon='fa-instagram')),  
-    ], null=True, blank=True)
-    languages = StreamField([
-        ('languages', Languages(null=True, blank=True, icon='fa-instagram')),  
-    ], null=True, blank=True)
 
     main = StreamField([
-        ('top_language', _S_TopLanguages(null=True, blank=True, icon='fa-instagram')),  
-        ('contribution', Contribution(null=True, blank=True, icon='home')),
-        ('code', blocks.RawHTMLBlock(null=True, blank=True, icon='code')),
+        ('top_language', _S_TopLanguages(null=True, blank=True, icon='fa-instagram')),
         ('calendar', _S_Calendar(null=True, blank=True, icon='home')),
     ], null=True, blank=True)
 
@@ -165,9 +100,6 @@ class ProfilePage(Page):
                 FieldPanel('email'),
                 FieldPanel('website'),
                 FieldPanel('company'),
-                StreamFieldPanel('platforms'),
-                StreamFieldPanel('organizations'),
-                StreamFieldPanel('languages'),
             ],
             heading="aside",
         ),
