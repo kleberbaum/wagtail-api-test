@@ -124,7 +124,7 @@ class RegistrationFormPage(AbstractEmailForm):
         return RegistrationFormSubmission
 
     # Create a new user
-    def create_user(self, username, customer_id, telephone, address, city, postal_code, email, country, platform_data, sources, verified, first_name, last_name, password, registration_data):
+    def create_user(self, username, customer_id, telephone, address, city, postal_code, email, country, newsletter, platform_data, sources, verified, first_name, last_name, password, registration_data):
         # enter the data here
         user = get_user_model()(
             username=username,
@@ -152,6 +152,7 @@ class RegistrationFormPage(AbstractEmailForm):
             postal_code=postal_code,
             email=email,
             country=country,
+            newsletter=newsletter,
             platform_data=registration_data,
             sources=sources,
             verified=verified,
@@ -202,6 +203,7 @@ class RegistrationFormPage(AbstractEmailForm):
             postal_code=form.cleaned_data['postal_code'],
             email=form.cleaned_data['email'],
             country=form.cleaned_data['country'],
+            newsletter=form.cleaned_data['newsletter'],
             platform_data=form.cleaned_data['platform_data'],
             sources=form.cleaned_data['sources'],
             verified=form.cleaned_data['verified'],

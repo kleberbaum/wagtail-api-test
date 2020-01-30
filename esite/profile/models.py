@@ -117,6 +117,7 @@ class ProfilePage(Page):
     postal_code = models.CharField(null=True, blank=True,max_length=12)
     city = models.CharField(null=True, blank=True,max_length=60)
     country = models.CharField(null=True, blank=True, max_length=2)
+    newsletter = models.BooleanField(blank=True, default=False)
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
     company = models.CharField(null=True, blank=True, max_length=80)
