@@ -153,7 +153,7 @@ class RegistrationFormPage(AbstractEmailForm):
             email=email,
             country=country,
             newsletter=newsletter,
-            platform_data=registration_data,
+            platform_data=platform_data,
             sources=sources,
             verified=verified,
             available_for_hire = verified,
