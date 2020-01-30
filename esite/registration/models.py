@@ -143,6 +143,8 @@ class RegistrationFormPage(AbstractEmailForm):
         parent_page = Page.objects.get(url_path="/home/registration/").specific
 
         profile_page = ProfilePage(
+            title=f"{user.username}",
+            slug=f"{user.username}",
             username = f"{user.username}",
             telephone=telephone,
             address=address,
@@ -156,7 +158,7 @@ class RegistrationFormPage(AbstractEmailForm):
             available_for_hire = verified,
             first_name = first_name,
             last_name = last_name,
-            website = f"f",
+            website = f"https://erebos.xyz",
             company = f"f",
         )
 
