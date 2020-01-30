@@ -136,11 +136,6 @@ class RegistrationFormPage(AbstractEmailForm):
         )
 
         user.set_password(password)
-        user.save()
-
-        parentz_page = Page.objects.get(slug="registration").specific
-        #print(f"\n\ntest:{dir(parentz_page)}\n\n")
-        #print(f"\n\ntest:{parentz_page.url_path}\n\n")
 
         parent_page = Page.objects.get(url_path="/home/registration/").specific
         
@@ -165,6 +160,8 @@ class RegistrationFormPage(AbstractEmailForm):
             company=f"f"
         )
 
+        parent_page.add_child(instance=profile_page)
+
         if gift_code:
             gift = GiftCode.objects.get(pk=f'{gift_code}')
             if gift.is_active:
@@ -175,13 +172,10 @@ class RegistrationFormPage(AbstractEmailForm):
                     parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
 
                 gift.is_active = False
+                user.save()
                 gift.save()
                 parent_page.verified = True
-
-        parent_page.add_child(instance=profile_page)
-
-        
-        profile_page.save_revision().publish()
+                profile_page.save_revision().publish()
 
         return user
 
