@@ -19,6 +19,7 @@ from wagtail.contrib.forms.models import AbstractForm, AbstractFormField, Abstra
 from wagtail.admin.utils import send_mail
 
 from esite.user.models import User
+from esite.gift.models import GiftCode
 from esite.profile.models import ProfilePage
 
 # Create your registration related models here.
@@ -124,7 +125,7 @@ class RegistrationFormPage(AbstractEmailForm):
         return RegistrationFormSubmission
 
     # Create a new user
-    def create_user(self, username, customer_id, telephone, address, city, postal_code, email, country, newsletter, platform_data, sources, verified, first_name, last_name, password, registration_data):
+    def create_user(self, username, customer_id, telephone, address, city, postal_code, email, country, newsletter, platform_data, sources, verified, first_name, last_name, password, registration_data, gift_code):
         # enter the data here
         user = get_user_model()(
             username=username,
@@ -140,8 +141,11 @@ class RegistrationFormPage(AbstractEmailForm):
         parentz_page = Page.objects.get(slug="registration").specific
         #print(f"\n\ntest:{dir(parentz_page)}\n\n")
         #print(f"\n\ntest:{parentz_page.url_path}\n\n")
-        parent_page = Page.objects.get(url_path="/home/registration/").specific
 
+        gift = GiftCode.objects.get(pk=f'{gift_code}')
+
+        parent_page = Page.objects.get(url_path="/home/registration/").specific
+        
         profile_page = ProfilePage(
             title=f"{user.username}",
             slug=f"{user.username}",
@@ -157,11 +161,19 @@ class RegistrationFormPage(AbstractEmailForm):
             sources=sources,
             verified=verified,
             available_for_hire = verified,
-            first_name = first_name,
-            last_name = last_name,
-            website = f"https://erebos.xyz",
-            company = f"f",
+            first_name=first_name,
+            last_name=last_name,
+            website=f"https://erebos.xyz",
+            company=f"f"
         )
+        if gift:
+            if gift.bid:
+                parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
+
+            if gift.tid:
+                parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
+        
+        parent_page.verified = True
 
         parent_page.add_child(instance=profile_page)
 
@@ -210,6 +222,7 @@ class RegistrationFormPage(AbstractEmailForm):
             first_name=form.cleaned_data['first_name'],
             last_name=form.cleaned_data['last_name'],
             password=form.cleaned_data['password'],
+            gift_code=form.cleaned_data['gift_code'],
             registration_data=json.dumps(form.cleaned_data, cls=DjangoJSONEncoder),
         )
 

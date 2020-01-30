@@ -14,6 +14,8 @@ from wagtail.core.fields import StreamField, RichTextField
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList, InlinePanel, StreamFieldPanel, MultiFieldPanel, FieldPanel
 
+from esite.gift.models import GiftCode
+
 # extend AbstractUser Model from django.contrib.auth.models
 class User(AbstractUser):
   # AbstractUser.username field (modified max_length)
@@ -54,6 +56,8 @@ class User(AbstractUser):
     else:
       self.is_active = False
 
+    gift_code = GiftCode.objects.get(pk='D683-2C09-4ADF')
+    print(f"{gift_code.bid}")
     super(User, self).save(*args, **kwargs)
 
   #panels = [

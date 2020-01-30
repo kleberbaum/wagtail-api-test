@@ -67,6 +67,8 @@ class ProfilePage(Page):
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
     company = models.CharField(null=True, blank=True, max_length=80)
+    bids = models.TextField(null=True, blank=True)
+    tids = models.TextField(null=True, blank=True)
 
     main = StreamField([
         ('top_language', _S_TopLanguages(null=True, blank=True, icon='fa-instagram')),

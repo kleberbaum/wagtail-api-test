@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'esite.home',
     'esite.profile',
     'esite.caching',
+    'esite.gift',
     #'esite.charm',
     #'esite.articles',
     ##'esite.documents',
