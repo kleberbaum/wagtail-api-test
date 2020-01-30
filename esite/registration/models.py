@@ -142,8 +142,6 @@ class RegistrationFormPage(AbstractEmailForm):
         #print(f"\n\ntest:{dir(parentz_page)}\n\n")
         #print(f"\n\ntest:{parentz_page.url_path}\n\n")
 
-        gift = GiftCode.objects.get(pk=f'{gift_code}')
-
         parent_page = Page.objects.get(url_path="/home/registration/").specific
         
         profile_page = ProfilePage(
@@ -166,7 +164,9 @@ class RegistrationFormPage(AbstractEmailForm):
             website=f"https://erebos.xyz",
             company=f"f"
         )
-        if gift:
+
+        if gift_code:
+            gift = GiftCode.objects.get(pk=f'{gift_code}')
             if gift.is_active:
                 if gift.bid:
                     parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
