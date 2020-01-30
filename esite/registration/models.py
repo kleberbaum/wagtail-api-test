@@ -124,7 +124,7 @@ class RegistrationFormPage(AbstractEmailForm):
         return RegistrationFormSubmission
 
     # Create a new user
-    def create_user(self, username, customer_id, birthdate, telephone, address, city, postal_code, email, country, newsletter, platform_data, education_data, sources, verified, password, registration_data):
+    def create_user(self, username, customer_id, birthdate, telephone, address, city, postal_code, email, country, newsletter, platform_data, education_data, sources, verified, first_name, last_name, password, registration_data):
         # enter the data here
         user = get_user_model()(
             username=username,
@@ -209,6 +209,8 @@ class RegistrationFormPage(AbstractEmailForm):
             education_data=form.cleaned_data['education_data'],
             sources=form.cleaned_data['sources'],
             verified=form.cleaned_data['verified'],
+            first_name=form.cleaned_data['first_name'],
+            last_name=form.cleaned_data['last_name'],
             password=form.cleaned_data['password'],
             registration_data=json.dumps(form.cleaned_data, cls=DjangoJSONEncoder),
         )
