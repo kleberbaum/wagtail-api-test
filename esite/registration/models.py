@@ -144,7 +144,6 @@ class RegistrationFormPage(AbstractEmailForm):
 
         profile_page = ProfilePage(
             username = f"{user.username}",
-            birthdate=birthdate,
             telephone=telephone,
             address=address,
             city=city,
