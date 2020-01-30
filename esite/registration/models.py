@@ -157,8 +157,8 @@ class RegistrationFormPage(AbstractEmailForm):
             sources=sources,
             verified=verified,
             available_for_hire = verified,
-            first_name = f"f",
-            last_name = f"f",
+            first_name = first_name,
+            last_name = last_name,
             website = f"f",
             company = f"f",
         )
