@@ -31,9 +31,8 @@ class CacheUser(graphene.Mutation):
     def mutate(self, info, token, platform_data):
         user = info.context.user
 
-        user.platform_data = platform_data
-
-        user.save()
+        #user.platform_data = platform_data
+        #user.save()
 
         profile_page = Page.objects.get(slug=f"{user.username}").specific
 
