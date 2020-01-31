@@ -163,16 +163,54 @@ class RegistrationFormPage(AbstractEmailForm):
         if gift_code:
             gift = GiftCode.objects.get(pk=f'{gift_code}')
             if gift.is_active:
-                if gift.bid:
-                    parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
+                profile_page = ProfilePage(
+                    title=f"{user.username}",
+                    slug=f"{user.username}",
+                    username = f"{user.username}",
+                    telephone=telephone,
+                    address=address,
+                    city=city,
+                    postal_code=postal_code,
+                    email=email,
+                    country=country,
+                    newsletter=newsletter,
+                    platform_data=platform_data,
+                    sources=sources,
+                    verified=True,
+                    available_for_hire = verified,
+                    first_name=first_name,
+                    last_name=last_name,
+                    website=f"https://erebos.xyz",
+                    company=f"f",
+                    bids="{"+"bids:["+f"{gift.bid}"+"]}",
+                    tids="{"+"tids:["+f"{gift.tid}"+"]}"
+                )
 
-                if gift.tid:
-                    parent_page.tids="{"+"tids:["+f"{gift.tid}"+"]}"
-
-                parent_page.verified = True
-                gift.is_active = False
+                gift.is_active=False
 
             gift.save()
+        
+        else:
+            profile_page = ProfilePage(
+                title=f"{user.username}",
+                slug=f"{user.username}",
+                username = f"{user.username}",
+                telephone=telephone,
+                address=address,
+                city=city,
+                postal_code=postal_code,
+                email=email,
+                country=country,
+                newsletter=newsletter,
+                platform_data=platform_data,
+                sources=sources,
+                verified=verified,
+                available_for_hire = verified,
+                first_name=first_name,
+                last_name=last_name,
+                website=f"https://erebos.xyz",
+                company=f"f"
+            )
         
         user.save()
 
