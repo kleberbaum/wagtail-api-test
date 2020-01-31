@@ -182,8 +182,8 @@ class RegistrationFormPage(AbstractEmailForm):
                     last_name=last_name,
                     website=f"https://erebos.xyz",
                     company=f"f",
-                    bids="{"+"bids:["+f"{gift.bid}"+"]}",
-                    tids="{"+"tids:["+f"{gift.tid}"+"]}"
+                    bids='{'+'"bids":["'+f'"{gift.bid}"'+']}',
+                    tids='{'+'"tids":["'+f'"{gift.tid}"'+']}',
                 )
 
                 gift.is_active=False
