@@ -102,6 +102,8 @@ class ProfilePage(Page):
                 FieldPanel('email'),
                 FieldPanel('website'),
                 FieldPanel('company'),
+                FieldPanel('bids'),
+                FieldPanel('tids'),
             ],
             heading="aside",
         ),

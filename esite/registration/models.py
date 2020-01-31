@@ -171,13 +171,13 @@ class RegistrationFormPage(AbstractEmailForm):
                 if gift.tid:
                     parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
 
-                gift.is_active = False
                 parent_page.verified = True
-                profile_page.save_revision().publish()
+                gift.is_active = False
 
             gift.save()
-
+        
         user.save()
+        profile_page.save_revision().publish()
         
         return user
 
