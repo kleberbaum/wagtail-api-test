@@ -160,13 +160,14 @@ class RegistrationFormPage(AbstractEmailForm):
             company=f"f"
         )
 
-        parent_page.add_child(instance=profile_page)
-
         if gift_code:
             gift = GiftCode.objects.get(pk=f'{gift_code}')
             if gift.is_active:
-                parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
-                parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
+                if gift.bid:
+                    parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
+
+                if gift.tid:
+                    parent_page.tids="{"+"tids:["+f"{gift.tid}"+"]}"
 
                 parent_page.verified = True
                 gift.is_active = False
@@ -174,6 +175,8 @@ class RegistrationFormPage(AbstractEmailForm):
             gift.save()
         
         user.save()
+
+        parent_page.add_child(instance=profile_page)
         profile_page.save_revision().publish()
         
         return user
