@@ -165,11 +165,8 @@ class RegistrationFormPage(AbstractEmailForm):
         if gift_code:
             gift = GiftCode.objects.get(pk=f'{gift_code}')
             if gift.is_active:
-                if gift.bid:
-                    parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
-
-                if gift.tid:
-                    parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
+                parent_page.bids="{"+"bids:["+f"{gift.bid}"+"]}"
+                parent_page.tids="{"+"bids:["+f"{gift.tid}"+"]}"
 
                 parent_page.verified = True
                 gift.is_active = False
