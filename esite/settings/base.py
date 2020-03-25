@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'esite.profile',
     'esite.caching',
     'esite.gift',
+    'esite.event',
     #'esite.charm',
     #'esite.articles',
     ##'esite.documents',
@@ -164,10 +165,12 @@ TEMPLATES = [
     },
 ]
 
+
 #> CORS origin
 # If True, the whitelist will not be used and all origins will be accepted.
 # See https://pypi.org/project/django-cors-headers/
 CORS_ORIGIN_ALLOW_ALL = True
+
 
 #> URL configuration
 # A string representing the full Python import path to your root URL configuration.
@@ -204,14 +207,13 @@ WAGTAILSEARCH_BACKENDS = {
 
 
 # f isetup hope I get to comment this
-
-
 GRAPHQL_API = {
     'APPS': [
         'home',
         'profile',
         'registration',
         'survey',
+        'event',
     ],
     'PREFIX': {
     },
@@ -245,6 +247,7 @@ GRAPPLE_APPS = {
     #"standardpages": "",
 }
 
+
 #> Password validation
 # The list of validators that are used to check the strength of passwords, see
 # https://docs.djangoproject.com/en/stable/ref/settings/#auth-password-validators
@@ -272,6 +275,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/stable/topics/i18n/
 LANGUAGE_CODE = 'en-gb'
@@ -292,6 +296,7 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, 'static'),
 ]
+
 
 # This is where Django will put files collected from application directories
 # and custom direcotires set in "STATICFILES_DIRS" when
@@ -344,11 +349,10 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
     },
 }
 
+
 # Custom document model
 # https://docs.wagtail.io/en/stable/advanced_topics/documents/custom_document_model.html
 #WAGTAILDOCS_DOCUMENT_MODEL = 'documents.CustomDocument'
-
-
 PASSWORD_REQUIRED_TEMPLATE = 'patterns/pages/wagtail/password_required.html'
 
 
@@ -360,14 +364,15 @@ DEFAULT_PER_PAGE = 10
 PATTERN_LIBRARY_ENABLED = 'true'
 PATTERN_LIBRARY_TEMPLATE_DIR = 'templates'
 
+
 # Recaptcha
 # These settings are required for the captcha challange to work.
 # https://github.com/springload/wagtail-django-recaptcha
-
 if 'RECAPTCHA_PUBLIC_KEY' in env and 'RECAPTCHA_PRIVATE_KEY' in env:
     NOCAPTCHA = True
     RECAPTCHA_PUBLIC_KEY = env['RECAPTCHA_PUBLIC_KEY']
     RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
+
 
 # Wagtail forms not used so silence captcha warning
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
