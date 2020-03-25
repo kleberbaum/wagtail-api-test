@@ -30,6 +30,7 @@ import graphql_jwt
 #import esite.charm.schema_relay
 #import esite.charm.schema
 import esite.registration.schema
+import esite.event.schema
 from esite.caching.schema import CacheUser
 
 # Register all your schemes for graphql here.
@@ -50,6 +51,7 @@ SnippetsQueryMixin_ = SnippetsQueryMixin()  # type: Any
 
 class Query(#esite.charm.schema.Query,
             esite.registration.schema.Query,
+            esite.event.schema.Query,
             #esite.charm.schema_relay.RelayQuery,
             graphene.ObjectType,
             #AuthQueryMixin_,
