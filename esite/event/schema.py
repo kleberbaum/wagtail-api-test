@@ -5,7 +5,13 @@ from graphene_django import DjangoObjectType
 from graphql import GraphQLError
 
 from .models import Event
+
 # Create your user related graphql schemes here.
+
+class EventType(DjangoObjectType):
+    class Meta:
+        model = Event
+        #exclude_fields = ['password']
 
 
 class Query(graphene.ObjectType):
