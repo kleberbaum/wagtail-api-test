@@ -32,6 +32,7 @@ import graphql_jwt
 import esite.registration.schema
 import esite.event.schema
 from esite.caching.schema import CacheUser
+from esite.jwtauth.schema import ObtainJSONWebToken
 
 # Register all your schemes for graphql here.
 
@@ -75,9 +76,10 @@ def mutation_parameters() -> dict:
     dict_params = {
         #'login': LoginMutation.Field(),
         #'logout': LogoutMutation.Field(),
-        'token_auth': graphql_jwt.ObtainJSONWebToken.Field(),
-        'verify_token': graphql_jwt.Verify.Field(),
-        'refresh_token': graphql_jwt.Refresh.Field(),
+        'token_auth' = ObtainJSONWebToken.Field(),
+        'verify_token' = graphql_jwt.Verify.Field(),
+        'refresh_token' = graphql_jwt.Refresh.Field(),
+        'revoke_token' = graphql_jwt.Revoke.Field(),
         'cache_user': CacheUser.Field(),
     }
     dict_params.update((camel_case_to_spaces(n).replace(' ', '_'), mut.Field())

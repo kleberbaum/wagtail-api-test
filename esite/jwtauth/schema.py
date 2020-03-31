@@ -19,25 +19,9 @@ from esite.registration.schema import UserType
 #        model = User
 #        exclude_fields = ['password']
 
-
-class CacheUser(graphene.Mutation):
+class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
     user = graphene.Field(UserType)
 
-    class Arguments:
-        token = graphene.String(required=False)
-        platform_data = graphene.String(required=True)
-
-    @login_required
-    def mutate(self, info, token, platform_data):
-        user = info.context.user
-
-        #user.platform_data = platform_data
-        #user.save()
-
-        profile_page = Page.objects.get(slug=f"{user.username}").specific
-
-        profile_page.platform_data = platform_data
-
-        profile_page.save_revision().publish()
-
-        return CacheUser(user=user)
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        return cls(user=info.context.user)
