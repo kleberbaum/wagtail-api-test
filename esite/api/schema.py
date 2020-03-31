@@ -76,7 +76,7 @@ def mutation_parameters() -> dict:
     dict_params = {
         #'login': LoginMutation.Field(),
         #'logout': LogoutMutation.Field(),
-        'token_auth' = graphql_jwt.ObtainJSONWebToken.Field(),
+        'token_auth' = ObtainJSONWebToken.Field(),
         'verify_token' = graphql_jwt.Verify.Field(),
         'refresh_token' = graphql_jwt.Refresh.Field(),
         'revoke_token' = graphql_jwt.Revoke.Field(),
