@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'wagtailcaptcha',
     #"grapple",
     "graphene_django",
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     #"channels",
     'wagtailfontawesome',
 
