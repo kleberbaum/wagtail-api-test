@@ -1,5 +1,3 @@
-
-
 class RegistryItem(dict):
     @property
     def types(self) -> tuple:
@@ -7,74 +5,52 @@ class RegistryItem(dict):
 
 
 class Registry:
-    _django = RegistryItem()
-    _forms = RegistryItem()
-    _pages = RegistryItem()
-    _settings = RegistryItem()
-    _snippets = RegistryItem()
-    _snippets_by_name = RegistryItem()
-    _streamfield_blocks = RegistryItem()
-    _streamfield_scalar_blocks = RegistryItem()
-    _page_prefetch = {
-        'content_type', 'owner',
-        'live_revision', 'page_ptr'
-    }
+    apps = []
+    pages = RegistryItem()
+    documents = RegistryItem()
+    images = RegistryItem()
+    snippets = RegistryItem()
+    streamfield_blocks = RegistryItem()
+    django_models = RegistryItem()
+    settings = RegistryItem()
+    forms = RegistryItem()
+
+    # The items in the registry that should be lazy loaded.
+    lazy_types = (
+        "pages",
+        "documents",
+        "images",
+        "snippets",
+        "django_models",
+        "settings",
+    )
+
+    # Internal use only, do not add to .models method
+    schema = []
 
     @property
-    def blocks(self) -> RegistryItem:
-        return self._streamfield_blocks
-
-    @property
-    def scalar_blocks(self) -> RegistryItem:
-        return self._streamfield_scalar_blocks
-
-    @property
-    def django(self) -> RegistryItem:
-        return self._django
-
-    @property
-    def forms(self) -> RegistryItem:
-        return self._forms
-
-    @property
-    def pages(self) -> RegistryItem:
-        return self._pages
-
-    @property
-    def settings(self) -> RegistryItem:
-        return self._settings
-
-    @property
-    def snippets(self) -> RegistryItem:
-        return self._snippets
-
-    @property
-    def snippets_by_name(self) -> RegistryItem:
-        return self._snippets_by_name
-
-    @property
-    def rsnippets(self) -> RegistryItem:
-        return RegistryItem((v, k) for k, v in self._snippets.items())
-
-    @property
-    def page_prefetch_fields(self) -> set:
-        return self._page_prefetch
+    def class_models(self) -> dict:
+        models: dict = {}
+        models.update(self.pages)
+        models.update(self.documents)
+        models.update(self.images)
+        models.update(self.snippets)
+        models.update(self.django_models)
+        models.update(self.settings)
+        return models
 
     @property
     def models(self) -> dict:
         models: dict = {}
         models.update(self.pages)
+        models.update(self.documents)
+        models.update(self.images)
         models.update(self.snippets)
-        models.update(self.forms)
-        models.update(self.django)
-        models.update((k, v[0]) for k, v in self.settings.items())
-        models.update((k, v) for k, v in self.blocks.items() if not isinstance(v, tuple))
-        models.update(self.scalar_blocks.items())
+        models.update(self.streamfield_blocks)
+        models.update(self.django_models)
+        models.update(self.settings)
         return models
 
-    @property
-    def rmodels(self) -> dict:
-        return dict((v, k) for k, v in self.models.items())
 
-
+# Singleton Registry
 registry = Registry()

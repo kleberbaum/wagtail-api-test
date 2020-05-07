@@ -20,6 +20,7 @@ class User(AbstractUser):
   username = models.CharField(null=True, blank=False, error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 36 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=36, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')
   is_customer = models.BooleanField(blank=False, default=False)
   customer_id = models.CharField(null=True, blank=True, max_length=36)
+  telegram_id = models.CharField(null=True, blank=True, max_length=36)
   #birthdate = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=False)
   #telephone = models.CharField(null=True, blank=False, max_length=40)
   #address = models.CharField(null=True, blank=True, max_length=60)

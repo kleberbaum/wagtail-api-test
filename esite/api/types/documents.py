@@ -1,51 +1,50 @@
-# graphql
-from graphql.execution.base import ResolveInfo
-# graphene
+from wagtail.documents.models import Document as WagtailDocument
+from wagtail.documents import get_document_model
+from graphene_django.types import DjangoObjectType
 import graphene
-# graphene_django
-from graphene_django import DjangoObjectType
-# graphene_django_optimizer
-import graphene_django_optimizer as gql_optimizer
-# wagtail documents
-from wagtail.documents.models import Document as wagtailDocument
-# app
-from ..permissions import with_collection_permissions
+# graphql_jwt
+from graphql_jwt.decorators import login_required, permission_required, staff_member_required, superuser_required
+
+from ..registry import registry
+from ..utils import resolve_queryset
+from .structures import QuerySetList
 
 
-class Document(DjangoObjectType):
+class DocumentObjectType(DjangoObjectType):
+    """
+    Base document type used if one isn't generated for the current model.
+    All other node types extend this.
+    """
+
     class Meta:
-        model = wagtailDocument
+        model = WagtailDocument
+        exclude_fields = ("tags",)
 
-    url = graphene.String()
-    filename = graphene.String()
-    file_extension = graphene.String()
+    id = graphene.ID()
+    title = graphene.String()
+    file = graphene.String()
+    created_at = graphene.DateTime()
+    file_size = graphene.Int()
+    file_hash = graphene.String()
 
-    def resolve_tags(self: wagtailDocument, _info: ResolveInfo):
-        return self.tags.all()
 
+def DocumentsQuery():
+    registry.documents[WagtailDocument] = DocumentObjectType
+    mdl = get_document_model()
+    model_type = registry.documents[mdl]
 
-def DocumentQueryMixin():
     class Mixin:
-        documents = graphene.List(Document)
-        document = graphene.Field(Document,
-                                  id=graphene.Int(required=True))
+        documents = QuerySetList(model_type, token=graphene.String(), enable_search=True)
 
-        def resolve_documents(self, info: ResolveInfo):
-            return with_collection_permissions(
-                info.context,
-                gql_optimizer.query(
-                    wagtailDocument.objects.all(),
-                    info
-                )
-            )
+        # Return all pages, ideally specific.
+        @login_required
+        def resolve_documents(self, info, **kwargs):
+            return resolve_queryset(mdl.objects.all(), info, **kwargs)
 
-        def resolve_document(self, info: ResolveInfo, id: int):
-            doc = with_collection_permissions(
-                info.context,
-                gql_optimizer.query(
-                    wagtailDocument.objects.filter(id=id),
-                    info
-                )
-            ).first()
-            return doc
     return Mixin
+
+
+def get_document_type():
+    registry.documents[WagtailDocument] = DocumentObjectType
+    mdl = get_document_model()
+    return registry.documents[mdl]

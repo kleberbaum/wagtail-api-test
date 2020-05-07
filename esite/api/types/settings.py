@@ -1,30 +1,46 @@
-# graphql
-from graphql.execution.base import ResolveInfo
-# graphene
 import graphene
-# graphene_django
-from graphene_django.converter import String
-# app
+# graphql_jwt
+from graphql_jwt.decorators import login_required, permission_required, staff_member_required, superuser_required
+
 from ..registry import registry
-from ..settings import settings_registry
 
 
-class Settings(graphene.Interface):
-    __typename = graphene.Field(String)
+def SettingsQuery():
+    if registry.settings:
 
+        class SettingsObjectType(graphene.Union):
+            class Meta:
+                types = registry.settings.types
 
-def SettingsQueryMixin():
-    class Mixin:
-        if settings_registry:
-            settings = graphene.Field(Settings,
-                                      name=graphene.String(required=True))
+        class Mixin:
+            setting = graphene.Field(SettingsObjectType, name=graphene.String())
+            settings = graphene.List(SettingsObjectType)
 
-            def resolve_settings(self, _info: ResolveInfo, name):
-                try:
-                    result = registry.settings[name][1].objects.first()
-                except KeyError:
-                    raise ValueError(f"Settings '{name}' not found.")
-                return result
-        else:  # pragma: no cover
+            # Return just one setting base on name param.
+            @login_required
+            def resolve_setting(self, info, **kwargs):
+                name = kwargs.get("name")
+                for setting in registry.settings:
+                    for object in setting._meta.model.objects.all():
+                        if name.lower() == object._meta.model_name:
+                            return object
+                return None
+
+            # Return all settings.
+            @login_required
+            def resolve_settings(self, info, **kwargs):
+                snippet_objects = []
+                for setting in registry.settings:
+                    for object in setting._meta.model.objects.all():
+                        snippet_objects.append(object)
+
+                return snippet_objects
+
+        return Mixin
+
+    else:
+
+        class Mixin:
             pass
-    return Mixin
+
+        return Mixin

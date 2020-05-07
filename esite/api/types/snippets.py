@@ -1,27 +1,35 @@
-# django
-from django.db import models
-# graphql
-from graphql.execution.base import ResolveInfo
-# graphene
 import graphene
-# app
+# graphql_jwt
+from graphql_jwt.decorators import login_required, permission_required, staff_member_required, superuser_required
+
 from ..registry import registry
 
 
-def SnippetsQueryMixin():
-    class Mixin:
-        if registry.snippets:
-            class Snippet(graphene.types.union.Union):
-                class Meta:
-                    types = registry.snippets.types
+def SnippetsQuery():
+    if registry.snippets:
 
-            snippets = graphene.List(Snippet,
-                                     typename=graphene.String(required=True))
+        class SnippetObjectType(graphene.Union):
+            class Meta:
+                types = registry.snippets.types
 
-            def resolve_snippets(self, _info: ResolveInfo, typename: str) -> models.Model:
-                node = registry.snippets_by_name[typename]
-                cls = node._meta.model
-                return cls.objects.all()
-        else:  # pragma: no cover
+        class Mixin:
+            snippets = graphene.List(SnippetObjectType)
+            # Return all snippets.
+
+            @login_required
+            def resolve_snippets(self, info, **kwargs):
+                snippet_objects = []
+                for snippet in registry.snippets:
+                    for object in snippet._meta.model.objects.all():
+                        snippet_objects.append(object)
+
+                return snippet_objects
+
+        return Mixin
+
+    else:
+
+        class Mixin:
             pass
-    return Mixin
+
+        return Mixin

@@ -38,6 +38,8 @@ from esite.utils.views import favicon, robots
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from esite.api.urls import *
+
 urlpatterns = [
     #path('django-admin/', admin.site.urls),
     path('admin/', include(wagtailadmin_urls)),

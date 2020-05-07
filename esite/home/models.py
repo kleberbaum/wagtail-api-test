@@ -16,11 +16,18 @@ from modelcluster.fields import ParentalKey
 from esite.colorfield.fields import ColorField, ColorAlphaField
 from esite.colorfield.blocks import ColorBlock, ColorAlphaBlock, GradientColorBlock
 
-#from grapple.models import (
-#    GraphQLField,
-#    GraphQLString,
-#    GraphQLStreamfield,
-#)
+from esite.api.helpers import register_streamfield_block
+
+from esite.api.models import (
+    GraphQLForeignKey,
+    GraphQLField,
+    GraphQLStreamfield,
+    GraphQLImage,
+    GraphQLString,
+    GraphQLCollection,
+    GraphQLEmbed,
+    GraphQLSnippet,
+)
 
 # Create your homepage related models here.
 
@@ -49,17 +56,22 @@ class Button(models.Model):
 
 
 #> Header
+@register_streamfield_block
 class _H_HeroBlock(blocks.StructBlock):
     slide_image = ImageChooserBlock(null=True, blank=False, help_text="Big, high resolution slider image")
     slide_button = SnippetChooserBlock(Button, null=True, blank=True, required=False, help_text="The button displayed at the frontpage slider")
 
+    graphql_fields = [GraphQLImage("slide_image"), GraphQLSnippet("slide_button", "home.Button")]
+
 #> Why Section
+@register_streamfield_block
 class Why_ColumnBlock(blocks.StructBlock):
     Column_image = ImageChooserBlock(null=True, blank=False, help_text="Icon representating the below content")
     Column_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="The bold header text at the frontpage slider")
     Column_subhead = blocks.RichTextBlock(null=True, blank=False, help_text="The content of the frontpage slider element", classname="full")
     Column_paragraph = blocks.RichTextBlock(null=True, blank=False, help_text="Formatted text", classname="full")
 
+@register_streamfield_block
 class _S_WhyBlock(blocks.StructBlock):
     why_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     why_displayhead = blocks.BooleanBlock(null=True, blank=True, default=True, required=False, help_text="Whether or not to display the header")
@@ -68,6 +80,7 @@ class _S_WhyBlock(blocks.StructBlock):
     ], null=True, blank=False, max_num=8)
 
 #> About Shop
+@register_streamfield_block
 class Shop_PricingcardBlock(blocks.StructBlock):
     shopcard_background = ColorBlock(null=True, blank=False, help_text="Select background color that contrasts text")
     shopcard_title = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Title of pricing card")
@@ -76,17 +89,20 @@ class Shop_PricingcardBlock(blocks.StructBlock):
     shopcard_sucessmsg = blocks.RichTextBlock(null=True, blank=False, help_text="Success message", classname="full")
     shopcard_button = SnippetChooserBlock(Button, null=True, blank=True, required=False, help_text="Button displayed at the pricing-section")
 
+@register_streamfield_block
 class _S_ShopBlock(blocks.StructBlock):
     #shop_background = ColorBlock(null=True, blank=False, help_text="Select background color that contrasts text")
     shop_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     shop_displayhead = blocks.BooleanBlock(null=True, blank=True, default=True, required=False, help_text="Whether or not to display the header")
 
 #> About Section
+@register_streamfield_block
 class About_CardBlock(blocks.StructBlock):
     card_image = ImageChooserBlock(null=True, blank=False, help_text="Office-fitting image")
     card_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="The bold header text at the frontpage slider")
     card_paragraph = blocks.RichTextBlock(null=True, blank=False, help_text="Formatted text", classname="full")
 
+@register_streamfield_block
 class _S_AboutBlock(blocks.StructBlock):
     about_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     about_displayhead = blocks.BooleanBlock(null=True, blank=True, default=True, required=False, help_text="Whether or not to display the header")
@@ -95,17 +111,20 @@ class _S_AboutBlock(blocks.StructBlock):
     ], null=True, blank=False, max_num=6)
 
 #> Instagram Section
+@register_streamfield_block
 class _S_InstagramBlock(blocks.StructBlock):
     instagram_id = blocks.CharBlock(null=True, blank=False, classname="full", help_text="Instagram-Account id")
     instagram_pc = blocks.CharBlock(null=True, blank=False, classname="full", help_text="Instagram-Post count")
 
 #> Steps Section
+@register_streamfield_block
 class Steps_StepBlock(blocks.StructBlock):
     step_image = ImageChooserBlock(null=True, blank=False, help_text="Image fitting this step")
     step_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     step_subhead = blocks.RichTextBlock(null=True, blank=False, help_text="Short introduction to the following paragraph", classname="full")
     step_paragraph = blocks.RichTextBlock(null=True, blank=False, help_text="Step paragraph", classname="full")
 
+@register_streamfield_block
 class _S_StepsBlock(blocks.StructBlock):
     steps_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     steps_displayhead = blocks.BooleanBlock(null=True, blank=True, default=True, required=False, help_text="Whether or not to display the header")
@@ -114,27 +133,32 @@ class _S_StepsBlock(blocks.StructBlock):
     ], null=True, blank=False, max_num=4)
 
 #> Trusted Section
+@register_streamfield_block
 class Trusted_PartnerBlock(blocks.StructBlock):
     partner_logo = ImageChooserBlock(null=True, blank=False, help_text="Image fitting this step")
     partner_link = blocks.URLBlock(null=True, blank=True, help_text="Important! Format https://www.domain.tld/xyz")
 
+@register_streamfield_block
 class _S_TrustedBlock(blocks.StructBlock):
     trusted_partner = blocks.StreamBlock([
         ('partner', Trusted_PartnerBlock(null=True, blank=False))
     ], null=True, blank=False, max_num=4)
 
 #> Instagram Section
+@register_streamfield_block
 class _S_WolfBlock(blocks.StructBlock):
     wolf_head = blocks.CharBlock(null=True, blank=False, classname="full", help_text="Bold header text")
     wolf_subhead = blocks.RichTextBlock(null=True, blank=False, help_text="The content of the black wolf coffee intro", classname="full")
 
 #> Trusted Section
+@register_streamfield_block
 class FAQ_QuestionBlock(blocks.StructBlock):
     question_icon = blocks.CharBlock(null=True, blank=True, help_text="Font Awesome icon name (e.g. facebook-f) from https://fontawesome.com/icons?d=gallery&s=solid&m=free")
     question_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     question_paragraph = blocks.RichTextBlock(null=True, blank=False, help_text="Formatted text", classname="full")
     question_link = blocks.URLBlock(null=True, blank=True, help_text="Important! Format https://www.domain.tld/xyz")
 
+@register_streamfield_block
 class _S_FAQBlock(blocks.StructBlock):
     header = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="Bold header text")
     questions = blocks.StreamBlock([
@@ -194,10 +218,10 @@ class HomePage(Page):
 
     token = models.CharField(null=True, blank=True, max_length=255)
 
-    #graphql_fields = [
-    #    GraphQLStreamfield("headers"),
-    #    GraphQLStreamfield("sections"),
-    #]
+    graphql_fields = [
+        GraphQLStreamfield("headers"),
+        GraphQLStreamfield("sections"),
+    ]
 
     main_content_panels = [
         StreamFieldPanel('headers'),

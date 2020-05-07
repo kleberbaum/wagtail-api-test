@@ -2,7 +2,10 @@
 from django.http import HttpResponse
 from django.db import models
 import django.contrib.auth.validators
-from wagtail.core.fields import RichTextField, StreamField
+from django.core.validators import RegexValidator
+from django.contrib.auth import get_user_model
+
+from wagtail.core.fields import RichTextField, StreamField, StreamBlock
 from wagtail.core.models import Page
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import PageChooserPanel, TabbedInterface, ObjectList, InlinePanel, StreamFieldPanel, MultiFieldPanel, FieldPanel

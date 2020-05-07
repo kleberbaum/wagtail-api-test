@@ -1,454 +1,432 @@
-# python
-from typing import Tuple, Callable
-import datetime
-# graphql
-from graphql import GraphQLScalarType
-from graphql.execution.base import ResolveInfo
-# graphene
+import json
 import graphene
-from graphene.utils.str_converters import to_snake_case
-from graphene.types.generic import GenericScalar
-from graphene.types import Scalar
-# graphene_django
-from graphene_django.converter import convert_django_field, List
-# dateutil
-from dateutil.parser import parse as dtparse
-# wagtail
-import wagtail.core.blocks
+import wagtail
+import inspect
+import wagtail.documents.blocks
+import wagtail.embeds.blocks
 import wagtail.images.blocks
 import wagtail.snippets.blocks
-from wagtail.core.blocks import Block, ListBlock, StructBlock
+from django.conf import settings
+from graphene.types import Scalar
+from graphene_django.converter import convert_django_field
 from wagtail.core.fields import StreamField
-# app
-from ..registry import registry
-from .. import settings
-# app types
-from .core import Page, wagtailPage
-from .images import Image, wagtailImage
+from wagtail.core import blocks
 
-# types
-StreamFieldHandlerType = Tuple[graphene.List, Callable[[StreamField, ResolveInfo], list]]
+from ..registry import registry
+
+
+class GenericStreamFieldInterface(Scalar):
+    @staticmethod
+    def serialize(stream_value):
+        return stream_value.stream_data
 
 
 @convert_django_field.register(StreamField)
-def convert_stream_field(field, _registry=None):
-    return Scalar(description=field.help_text, required=not field.null)
-
-
-def _scalar_block(graphene_type):
-    tp = registry.scalar_blocks.get(graphene_type)
-    if not tp:
-        node = '%sBlock' % graphene_type
-        tp = type(node, (graphene.ObjectType,), {
-            'value': graphene.Field(graphene_type),
-            'field': graphene.Field(graphene.String),
-        })
-        registry.scalar_blocks[graphene_type] = tp
-    return tp
-
-
-def _resolve_scalar(key, type_):
-    type_str = str(type_)
-    if type_str == 'DateBlock':
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=dtparse(self), field=key)
-    elif type_str == 'DateTimeBlock':
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=dtparse(self), field=key)
-    elif type_str == 'TimeBlock':
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=datetime.time.fromisoformat(self), field=key)
-    else:
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=self, field=key)
-    return resolve
-
-
-def _page_block():
-    tp = registry.scalar_blocks.get(Page)
-    if not tp:
-        node = 'PageBlock'
-        tp = type(node, (graphene.ObjectType,), {
-            'value': graphene.Field(Page),
-            'field': graphene.Field(graphene.String),
-        })
-        registry.scalar_blocks[Page] = tp
-    return tp
-
-
-def _resolve_page_block(key, type_):
-    def resolve(self, info: ResolveInfo):
-        return type_(value=_resolve_page(self, info), field=key)
-    return resolve
-
-
-def _image_block():
-    tp = registry.scalar_blocks.get(Image)
-    if not tp:
-        node = 'ImageBlock'
-        tp = type(node, (graphene.ObjectType,), {
-            'value': graphene.Field(Image),
-            'field': graphene.Field(graphene.String),
-        })
-        registry.scalar_blocks[Image] = tp
-    return tp
-
-
-def _resolve_image_block(key, type_):
-    def resolve(self, info: ResolveInfo):
-        return type_(value=_resolve_image(self, info), field=key)
-    return resolve
-
-
-def _snippet_block(typ):
-    tp = registry.scalar_blocks.get(typ)
-    if not tp:
-        node = '%sBlock' % typ
-        tp = type(node, (graphene.ObjectType,), {
-            'value': graphene.Field(typ),
-            'field': graphene.Field(graphene.String),
-        })
-        registry.scalar_blocks[typ] = tp
-    return tp
-
-
-def _resolve_snippet_block(key, type_, snippet_type):
-    def resolve(self, info: ResolveInfo):
-        info.return_type = snippet_type
-        return type_(value=_resolve_snippet(self, info), field=key)
-    return resolve
-
-
-def _list_block(typ):
-    tp = registry.scalar_blocks.get((List, typ))
-    if not tp:
-        node = '%sListBlock' % typ
-        tp = type(node, (graphene.ObjectType,), {
-            'value': graphene.List(typ),
-            'field': graphene.Field(graphene.String),
-        })
-        registry.scalar_blocks[(List, typ)] = tp
-    return tp
-
-
-def _resolve_list_block_scalar(key, type_, of_type):
-    type_str = str(of_type)
-    if type_str == 'Date' or type_str == 'DateTime':
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=list(dtparse(s) for s in self), field=key)
-    elif type_str == 'Time':
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=list(datetime.time.fromisoformat(s) for s in self), field=key)
-    else:
-        def resolve(self, _info: ResolveInfo):
-            return type_(value=list(s for s in self), field=key)
-    return resolve
-
-
-def _resolve_list_block(key, type_, of_type):
-    if issubclass(of_type, Scalar):
-        resolve = _resolve_list_block_scalar(key, type_, of_type)
-    elif of_type == Image:
-        def resolve(self, info: ResolveInfo):
-            return type_(value=list(_resolve_image(s, info) for s in self), field=key)
-    elif of_type == Page:
-        def resolve(self, info: ResolveInfo):
-            return type_(value=list(_resolve_page(s, info) for s in self), field=key)
-    elif of_type in registry.snippets.values():
-        def resolve(self, info: ResolveInfo):
-            info.return_type = of_type
-            return type_(value=list(_resolve_snippet(s, info) for s in self), field=key)
-    else:
-        def resolve(self, info: ResolveInfo):
-            info.return_type = of_type
-            return type_(value=list(of_type(**s) for s in self), field=key)
-    return resolve
-
-
-def _create_root_blocks(block_type_handlers: dict):
-    for k, t in block_type_handlers.items():
-        if not isinstance(t, tuple) and issubclass(t, Scalar):
-            typ = _scalar_block(t)
-            block_type_handlers[k] = typ, _resolve_scalar(k, typ)
-        elif isinstance(t, tuple) and isinstance(t[0], List):
-            typ = _list_block(t[0].of_type)
-            block_type_handlers[k] = typ, _resolve_list_block(k, typ, t[0].of_type)
-        elif isinstance(t, tuple) and issubclass(t[0], Page):
-            typ = _page_block()
-            block_type_handlers[k] = typ, _resolve_page_block(k, typ)
-        elif isinstance(t, tuple) and issubclass(t[0], Image):
-            typ = _image_block()
-            block_type_handlers[k] = typ, _resolve_image_block(k, typ)
-        elif isinstance(t, tuple) and t[0] in registry.snippets.values():
-            typ = _snippet_block(t[0])
-            block_type_handlers[k] = typ, _resolve_snippet_block(k, typ, t[0])
-
-
-def convert_block(block, block_type_handlers: dict, info: ResolveInfo, is_lazy=True):
-    if is_lazy:
-        block_type = block.get('type')
-        value = block.get('value')
-    else:
-        block_type, value = block[:2]
-    if block_type in block_type_handlers:
-        handler = block_type_handlers[block_type]
-        if isinstance(handler, tuple):
-            tp, resolver = handler
-            return resolver(value, info)
-        else:
-            if isinstance(value, dict):
-                return handler(**value)
-            else:
-                raise NotImplementedError()  # pragma: no cover
-    else:
-        raise NotImplementedError()  # pragma: no cover
-
-
-def _resolve_type(self, _info: ResolveInfo):
-    return self.__class__
-
-
-def stream_field_handler(stream_field_name: str, field_name: str, block_type_handlers: dict) -> StreamFieldHandlerType:
-    # add Generic Scalars (default)
-    if settings.LOAD_GENERIC_SCALARS:
-        _scalar_block(GenericScalar)
-
-    # Unions must reference NamedTypes, so for scalar types we need to create a new type to
-    # encapsulate scalars, page links, images, snippets
-    _create_root_blocks(block_type_handlers)
-
-    types_ = list(block_type_handlers.values())
-    for i, t in enumerate(types_):
-        if isinstance(t, tuple):
-            types_[i] = t[0]
-
-    class Meta:
-        types = tuple(set(types_))
-
-    stream_field_type = type(
-        stream_field_name + "Type",
-        (graphene.Union, ),
-        {
-            'Meta': Meta,
-            'resolve_type': _resolve_type
-        }
+def convert_stream_field(field, registry=None):
+    return GenericStreamFieldInterface(
+        description=field.help_text, required=not field.null
     )
 
-    def resolve_field(self, info: ResolveInfo):
-        field = getattr(self, field_name)
-        return [convert_block(block, block_type_handlers, info, field.is_lazy) for block in field.stream_data]
 
-    return graphene.List(stream_field_type), resolve_field
+class StreamFieldInterface(graphene.Interface):
+    id = graphene.String()
+    block_type = graphene.String()
+    field = graphene.String()
+    raw_value = graphene.String()
 
+    @classmethod
+    def resolve_type(cls, instance, info):
+        """
+        If block has a custom Graphene Node type in registry then use it,
+        otherwise use generic block type.
+        """
+        if hasattr(instance, "block"):
+            mdl = type(instance.block)
+            if mdl in registry.streamfield_blocks:
+                return registry.streamfield_blocks[mdl]
 
-def _is_compound_block(block):
-    return isinstance(block, StructBlock)
+            for block_class in inspect.getmro(mdl):
+                if block_class in registry.streamfield_blocks:
+                    return registry.streamfield_blocks[block_class]
 
+        return registry.streamfield_blocks["generic-block"]
 
-def _is_list_block(block):
-    return isinstance(block, ListBlock)
+    def resolve_id(self, info, **kwargs):
+        return self.id
 
+    def resolve_block_type(self, info, **kwargs):
+        return type(self.block).__name__
 
-def _is_custom_type(block):
-    return hasattr(block, "__graphql_type__")
+    def resolve_field(self, info, **kwargs):
+        return self.block.name
 
+    def resolve_raw_value(self, info, **kwargs):
+        if isinstance(self.value, dict):
+            return serialize_struct_obj(self.value)
 
-def _add_handler_resolves(dict_params):
-    to_add = {}
-    for k, v in dict_params.items():
-        if k == 'field':    # pragma: no cover
-            raise ValueError("StructBlocks cannot have fields named 'field'")
-        if isinstance(v, tuple):
-            val = v[0]
-            to_add['resolve_' + k] = v[1]
-        elif issubclass(v, (graphene.types.DateTime, graphene.types.Date)):
-            val = v
-            to_add['resolve_' + k] = _resolve_datetime
-        elif issubclass(v, graphene.types.Time):
-            val = v
-            to_add['resolve_' + k] = _resolve_time
-        elif not issubclass(v, Scalar):
-            val = v
-            to_add['resolve_' + k] = _resolve
-        else:
-            val = v
-        dict_params[k] = graphene.Field(val)
-    dict_params.update(to_add)
+        return self.value
 
 
-def block_handler(block: Block, app, prefix=''):
-    cls = block.__class__
-    handler = registry.blocks.get(cls)
+def generate_streamfield_union(graphql_types):
+    class StreamfieldUnion(graphene.Union):
+        class Meta:
+            types = graphql_types
 
-    if handler is None:
-        if _is_custom_type(block):
-            target_block_type = block.__graphql_type__()
-            this_handler = block_handler(target_block_type, app, prefix)
-            if isinstance(this_handler, tuple):
-                raise NotImplementedError()
-            if hasattr(block, '__graphql_resolve__'):
-                resolver = _resolve_custom(block, this_handler)
-            elif issubclass(target_block_type, Scalar):
-                resolver = _resolve_generic_scalar
-            else:
-                raise TypeError("Non Scalar custom types need an explicit __graphql_resolve__ method.")
-            handler = (lambda x: this_handler, resolver)
-        elif _is_compound_block(block):
-            node = prefix + cls.__name__
-            dict_params = dict(
-                (n, block_handler(block_type, app, prefix))
-                for n, block_type in block.child_blocks.items()
-            )
-            _add_handler_resolves(dict_params)
-            dict_params.update({  # add the field name
-                'field': graphene.Field(graphene.String),
-                'resolve_field': lambda *x: block.name,
-            })
-            tp = type(node, (graphene.ObjectType,), dict_params)
-            handler = tp
-            registry.blocks[cls] = handler
-        elif _is_list_block(block):
-            this_handler = block_handler(block.child_block, app, prefix)
-            if isinstance(this_handler, tuple):
-                handler = List(this_handler[0]), _resolve_list(*this_handler)
-            else:
-                handler = List(this_handler), _resolve_simple_list
-        else:
-            handler = GenericScalar
+        @classmethod
+        def resolve_type(cls, instance, info):
+            """
+            If block has a custom Graphene Node type in registry then use it,
+            otherwise use generic block type.
+            """
+            mdl = type(instance.block)
+            if mdl in registry.streamfield_blocks:
+                return registry.streamfield_blocks[mdl]
 
-    if cls == wagtail.snippets.blocks.SnippetChooserBlock:
-        handler = (handler[0](block), handler[1])   # type: ignore
+            return registry.streamfield_blocks["generic-block"]
 
-    return handler
+    return StreamfieldUnion
 
 
-def _snippet_handler(block):
-    tp = registry.snippets[block.target_model]
-    return tp
+class StructBlockItem:
+    id = None
+    block = None
+    value = None
+
+    def __init__(self, id, block, value=""):
+        self.id = id
+        self.block = block
+        self.value = value
 
 
-def _resolve_snippet(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    id_ = self if isinstance(self, int) else getattr(self, field)
-    if hasattr(info.return_type, 'graphene_type'):
-        cls = info.return_type.graphene_type._meta.model
+def serialize_struct_obj(obj):
+    rtn_obj = {}
+
+    if hasattr(obj, "stream_data"):
+        rtn_obj = []
+        for field in obj.stream_data:
+            rtn_obj.append(serialize_struct_obj(field["value"]))
     else:
-        cls = info.return_type._meta.model
-    obj = cls.objects.filter(id=id_).first()
-    return obj
+        for field in obj:
+            value = obj[field]
+            if hasattr(value, "stream_data"):
+                rtn_obj[field] = list(
+                    map(
+                        lambda data: serialize_struct_obj(data["value"]),
+                        value.stream_data,
+                    )
+                )
+            elif hasattr(value, "value"):
+                rtn_obj[field] = value.value
+            elif hasattr(value, "src"):
+                rtn_obj[field] = value.src
+            elif hasattr(value, "file"):
+                rtn_obj[field] = value.file.url
+            else:
+                rtn_obj[field] = value
+
+    return rtn_obj
 
 
-def _resolve_image(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    id_ = self if isinstance(self, int) else getattr(self, field)
-    return wagtailImage.objects.filter(id=id_).first()
+class StructBlock(graphene.ObjectType):
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+    blocks = graphene.List(StreamFieldInterface)
+
+    def resolve_blocks(self, info, **kwargs):
+        stream_blocks = []
+        for name, value in self.value.items():
+            block = self.block.child_blocks[name]
+            if (
+              issubclass(type(block), wagtail.core.blocks.ChooserBlock)
+              and hasattr(value, 'id')
+            ):
+                value = block.to_python(value.id)
+            elif not issubclass(type(block), blocks.StreamBlock):
+                value = block.to_python(value)
+
+            stream_blocks.append(StructBlockItem(name, block, value))
+        return stream_blocks
 
 
-def _resolve_page(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    id_ = self if isinstance(self, int) else getattr(self, field)
-    return wagtailPage.objects.filter(id=id_).specific().first()
+class StreamBlock(StructBlock):
+    class Meta:
+        interfaces = (StreamFieldInterface,)
 
+    def resolve_blocks(self, info, **kwargs):
+        stream_blocks = []
 
-def _resolve(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    data = getattr(self, field)
-    cls = info.return_type
-    return cls.graphene_type(**data)
-
-
-def _resolve_datetime(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    data = getattr(self, field)
-    return dtparse(data) if data else None
-
-
-def _resolve_time(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    data = getattr(self, field)
-    return datetime.time.fromisoformat(data) if data else None
-
-
-def _resolve_custom(block, hdl):
-    def _inner(self, info: ResolveInfo):
-        if self is None:    # pragma: no cover
-            return None
-        cls = info.return_type
-        if isinstance(self, dict):
-            data = self
+        if issubclass(type(self.value), wagtail.core.blocks.stream_block.StreamValue):
+          # self: StreamChild, block: StreamBlock, value: StreamValue
+          stream_data = self.value.stream_data
+          child_blocks = self.value.stream_block.child_blocks
         else:
-            data = getattr(self, info.field_name)
-        value = block.__graphql_resolve__(data, info)
+          # This occurs when StreamBlock is child of StructBlock
+          # self: StructBlockItem, block: StreamBlock, value: list
+          stream_data = self.value
+          child_blocks = self.block.child_blocks
 
-        if hasattr(cls, "serialize"):
-            return cls.serialize(value)
-        return hdl(**value)
-    return _inner
+        for field in stream_data:
+            block = child_blocks[field["type"]]
+            value = field['value']
+            if (
+              issubclass(type(block), wagtail.core.blocks.ChooserBlock)
+              or not issubclass(type(block), blocks.StructBlock)
+            ):
+              value = block.to_python(value)
 
+            stream_blocks.append(StructBlockItem(field["type"], block, value))
 
-def _resolve_generic_scalar(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    data = getattr(self, info.field_name)
-    cls = info.return_type
-    return cls.serialize(data)
-
-
-def _resolve_simple_list(self, info: ResolveInfo):
-    if self is None:    # pragma: no cover
-        return None
-    field = to_snake_case(info.field_name)
-    data = getattr(self, field)
-    cls = info.return_type.of_type
-    if isinstance(cls, (Scalar, GraphQLScalarType)):
-        return list(d for d in data)
-    return list(cls(**d) for d in data)
+        return stream_blocks
 
 
-def _resolve_list(tp, inner_resolver):
-    def resolve(self, info: ResolveInfo):
-        if self is None:    # pragma: no cover
-            return None
-        field = to_snake_case(info.field_name)
-        ids = getattr(self, field)
-        info.return_type = tp
-        return list(inner_resolver(i, info) for i in ids)
-    return resolve
+class StreamFieldBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
 
 
-registry.blocks.update({
-    # choosers
-    wagtail.images.blocks.ImageChooserBlock: (Image, _resolve_image),
-    wagtail.core.blocks.PageChooserBlock: (Page, _resolve_page),
-    wagtail.snippets.blocks.SnippetChooserBlock: (_snippet_handler, _resolve_snippet),
-    # standard fields
-    wagtail.core.blocks.CharBlock: graphene.types.String,
-    wagtail.core.blocks.URLBlock: graphene.types.String,
-    wagtail.core.blocks.DateBlock: graphene.types.Date,
-    wagtail.core.blocks.DateTimeBlock: graphene.types.DateTime,
-    wagtail.core.blocks.BooleanBlock: graphene.types.Boolean,
-    wagtail.core.blocks.IntegerBlock: graphene.types.Int,
-    wagtail.core.blocks.FloatBlock: graphene.types.Float,
-    wagtail.core.blocks.DecimalBlock: graphene.types.String,
-    wagtail.core.blocks.TextBlock: graphene.types.String,
-    wagtail.core.blocks.TimeBlock: graphene.types.Time,
-    wagtail.core.blocks.RichTextBlock: graphene.types.String,
-    wagtail.core.blocks.RawHTMLBlock: graphene.types.String,
-    wagtail.core.blocks.BlockQuoteBlock: graphene.types.String,
-    wagtail.core.blocks.ChoiceBlock: graphene.types.String,
-    wagtail.core.blocks.RegexBlock: graphene.types.String,
-    wagtail.core.blocks.EmailBlock: graphene.types.String,
-    wagtail.core.blocks.StaticBlock: graphene.types.String,
-})
+class CharBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class TextBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class EmailBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class IntegerBlock(graphene.ObjectType):
+    value = graphene.Int()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class FloatBlock(graphene.ObjectType):
+    value = graphene.Float()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class DecimalBlock(graphene.ObjectType):
+    value = graphene.Float()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class RegexBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class URLBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class BooleanBlock(graphene.ObjectType):
+    value = graphene.Boolean()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class DateBlock(graphene.ObjectType):
+    value = graphene.String(format=graphene.String())
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+    def resolve_value(self, info, **kwargs):
+        format = kwargs.get("format")
+        if format:
+            return self.value.strftime(format)
+        return self.value
+
+
+class DateTimeBlock(DateBlock):
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class TimeBlock(DateBlock):
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class RichTextBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class RawHTMLBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class BlockQuoteBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class ChoiceOption(graphene.ObjectType):
+    key = graphene.String()
+    value = graphene.String()
+
+
+class ChoiceBlock(graphene.ObjectType):
+    value = graphene.String()
+    choices = graphene.List(ChoiceOption)
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+    def resolve_choices(self, info, **kwargs):
+        choices = []
+        for key, value in self.block._constructor_kwargs["choices"]:
+            choice = ChoiceOption(key, value)
+            choices.append(choice)
+        return choices
+
+
+def get_media_url(url):
+    if url[0] == "/":
+        return settings.BASE_URL + url
+    return url
+
+
+class EmbedBlock(graphene.ObjectType):
+    value = graphene.String()
+    url = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+    def resolve_url(self, info, **kwargs):
+        if hasattr(self, "value"):
+            return get_media_url(self.value.url)
+        return get_media_url(self.url)
+
+
+class StaticBlock(graphene.ObjectType):
+    value = graphene.String()
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+
+class ListBlock(graphene.ObjectType):
+    items = graphene.List(StreamFieldInterface)
+
+    class Meta:
+        interfaces = (StreamFieldInterface,)
+
+    def resolve_items(self, info, **kwargs):
+        # Get the nested StreamBlock type
+        block_type = self.block.child_block
+        # Return a list of GraphQL types from the list of valuess
+        return [StructBlockItem(self.id, block_type, item) for item in self.value]
+
+
+registry.streamfield_blocks.update(
+    {
+        "generic-block": StreamFieldBlock,
+        blocks.CharBlock: CharBlock,
+        blocks.TextBlock: TextBlock,
+        blocks.EmailBlock: EmailBlock,
+        blocks.IntegerBlock: IntegerBlock,
+        blocks.FloatBlock: FloatBlock,
+        blocks.DecimalBlock: DecimalBlock,
+        blocks.RegexBlock: RegexBlock,
+        blocks.URLBlock: URLBlock,
+        blocks.BooleanBlock: BooleanBlock,
+        blocks.DateBlock: DateBlock,
+        blocks.TimeBlock: TimeBlock,
+        blocks.DateTimeBlock: DateTimeBlock,
+        blocks.RichTextBlock: RichTextBlock,
+        blocks.RawHTMLBlock: RawHTMLBlock,
+        blocks.BlockQuoteBlock: BlockQuoteBlock,
+        blocks.ChoiceBlock: ChoiceBlock,
+        blocks.StreamBlock: StreamBlock,
+        blocks.StructBlock: StructBlock,
+        blocks.StaticBlock: StaticBlock,
+        blocks.ListBlock: ListBlock,
+        wagtail.embeds.blocks.EmbedBlock: EmbedBlock,
+    }
+)
+
+
+def register_streamfield_blocks():
+    from .pages import PageInterface
+    from .documents import get_document_type
+    from .images import get_image_type
+
+    class PageChooserBlock(graphene.ObjectType):
+        page = graphene.Field(PageInterface)
+
+        class Meta:
+            interfaces = (StreamFieldInterface,)
+
+        def resolve_page(self, info, **kwargs):
+            return self.value
+
+    class DocumentChooserBlock(graphene.ObjectType):
+        document = graphene.Field(get_document_type())
+
+        class Meta:
+            interfaces = (StreamFieldInterface,)
+
+        def resolve_document(self, info, **kwargs):
+            return self.value
+
+    class ImageChooserBlock(graphene.ObjectType):
+        image = graphene.Field(get_image_type())
+
+        class Meta:
+            interfaces = (StreamFieldInterface,)
+
+        def resolve_image(self, info, **kwargs):
+            return self.value
+
+    class SnippetChooserBlock(graphene.ObjectType):
+        snippet = graphene.String()
+
+        class Meta:
+            interfaces = (StreamFieldInterface,)
+
+        def resolve_snippet(self, info, **kwargs):
+            return self.value
+
+    registry.streamfield_blocks.update(
+        {
+            blocks.PageChooserBlock: PageChooserBlock,
+            wagtail.documents.blocks.DocumentChooserBlock: DocumentChooserBlock,
+            wagtail.images.blocks.ImageChooserBlock: ImageChooserBlock,
+            wagtail.snippets.blocks.SnippetChooserBlock: SnippetChooserBlock,
+        }
+    )

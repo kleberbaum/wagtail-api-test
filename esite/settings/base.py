@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'esite.caching',
     'esite.gift',
     'esite.event',
-    'esite.jwtauth',
+    #'esite.jwtauth',
     #'esite.charm',
     #'esite.articles',
     ##'esite.documents',
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'esite.survey',
 
     'esite.colorfield',
+    'esite.log',
 
     # Wagtail core apps
     #'wagtail.api.v2',
@@ -83,6 +84,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'generic_chooser',
 
     # Third party apps
     'corsheaders',
@@ -244,14 +246,12 @@ GRAPHQL_JWT = {
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }
 
-GRAPPLE_APPS = {
+API_APPS = {
     "home": "",
-    #"articles": "",
-    "documents": "",
-    "images": "",
-    #"news": "",
-    "people": "",
-    #"standardpages": "",
+    "profile": "",
+    "registration": "",
+    "survey": "",
+    "event": "",
 }
 
 

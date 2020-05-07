@@ -1,5 +1,5 @@
 Django==2.2.9
-wagtail==2.7.0
+wagtail==2.9rc1
 psycopg2-binary==2.8.4
 wagtail-django-recaptcha==1.0
 django-pattern-library==0.2.5
@@ -11,3 +11,13 @@ django-graphql-jwt==0.3.0
 graphene-django-optimizer==0.6.1
 django-cors-headers==3.2.0
 django-filter==2.2.0
+wagtail-generic-chooser==0.1.1
+Telethon==1.13.0
+channels==1.1.8
+asgi_redis
+graphql_ws
+wagtailmedia
+graphql-core==2.2.1
+factory-boy==2.12.0
+wagtail-factories==2.0.0
+wagtail-headless-preview==0.1.4
