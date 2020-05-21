@@ -1,0 +1,13 @@
+<blockquote class="blockquote text-center my-5 py-2 border-top border-bottom">
+    <p class="mb-0">{{ value.quote }}</p>
+
+    {% if value.attribution %}
+        <footer class="blockquote-footer">
+            {% if value.citation_link %}
+                <a href="{{ value.citation_link }}">{{ value.attribution }}</a>
+            {% else %}
+                {{ value.attribution }}
+            {% endif %}
+        </footer>
+    {% endif %}
+</blockquote>

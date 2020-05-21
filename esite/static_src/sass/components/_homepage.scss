@@ -1,0 +1,56 @@
+.homepage {
+
+    &__header {
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+
+    &__wrapper {
+        padding: 0px 20px 100px !important;
+    }
+
+    &__hero-container {
+      position: relative;
+    }
+
+    &__hero-image-container {
+      position: relative;
+      padding-bottom: 50px;
+    }
+
+    &__hero-text-block {
+      color: $color--white;
+      background-color: $color--secondary;
+      padding: 20px;
+
+      @include media-query(tablet-landscape) {
+        position: absolute;
+        bottom: 90px;
+        left: 100px;
+        width: 600px;
+        height: 325px;
+        padding: 30px;
+      }
+
+      h2 {
+          color: $color--white;
+      }
+    }
+
+    &__hero-button {
+        color: $color--white;
+        border: $color--white solid 1px;
+
+        &:hover {
+            background-color: lighten($color--secondary, 40%);
+            color: $color--white !important;
+        }
+
+        @include media-query(tablet-landscape) {
+            position: absolute;
+            top: 250px;
+            left: 40px;
+        }
+    }
+
+}

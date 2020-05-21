@@ -1,0 +1,3 @@
+<input type="text" name="{{ name }}" {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}"
+class="gradient_colorfield_field lgcolor form-control {% if not is_required %}{required:false}{% endif %}"
+{% if value %}style="background:{{ value }};"{% endif %} readonly/>

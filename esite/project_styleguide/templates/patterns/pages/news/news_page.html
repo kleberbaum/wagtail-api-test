@@ -1,0 +1,72 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+
+
+{% block content %}
+    {% block breadcrumbs %}
+        {% include "patterns/molecules/navigation/breadcrumbs.html" with navclass="container" %}
+    {% endblock %}
+
+    <article>
+        <header class="container">
+
+
+            <h1 class="py-2">{{ page.title }}</h1>
+
+            {% if page.introduction %}
+                <p class="lead py-2">
+                    {{ page.introduction }}
+                </p>
+            {% endif %}
+
+            {% if page.featured_image %}
+                {% include "patterns/molecules/media/featured-image.html" with media=page.featured_image caption=page.featured_image_caption %}
+            {% endif %}
+        
+        </header>
+
+        <div class="main-content container pt-3">
+            <div class="row">
+                <div class="col-lg-9">
+                        {% include_block page.body %}
+
+                        {% comment %}
+                        {% include "patterns/molecules/share/share.html" %}
+                        {% endcomment %}
+                </div>
+            </div>
+        </div>
+
+        <footer class="container">
+            <div class="row">
+                <div class="meta py-2 small col-lg-9">
+                    <p>
+                    {% if page.display_date %}
+                        <span class="publish-date">
+                            Publisert 
+                            {{ page.display_date|date:"d.m.Y" }}
+                        </span>
+                    {% endif %}
+                    </p>
+
+                    {% if page.tags.all.count %}
+                        <p class="tags py-1">
+                            {% for tag in page.tags.all %}
+                            <span class="badge badge-secondary p-0_5 rounded">{{ tag }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+
+                    {% comment %}
+                        {% include "patterns/molecules/relatedcontent/relatedcontent.html" with related_documents=page.related_documents.all related_pages=page.related_pages.all %}
+                    {% endcomment %}
+                    
+                    </div>
+    
+                </div>
+            </div>
+        </footer>
+    </article>
+
+{% endblock %}

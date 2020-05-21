@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+<nav>
+    <ul class="nav">
+        {% for link in footerlinks %}
+            <li class="nav-item">
+                {% include_block link %} 
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

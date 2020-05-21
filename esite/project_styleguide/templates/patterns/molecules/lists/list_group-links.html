@@ -1,0 +1,24 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% comment %}
+
+This template can be used in different places. In streamfield block
+or directly in a page template. To use this template pass `linklist` into context.
+
+Example:
+    {% include "patterns/molecules/lists/list_group-links.html" with linklist=latest_news %}
+
+{% endcomment %}
+
+{% if linklist %}
+	<ul class="list-group list-group-flush bg-transparent row">
+		{% for newsitem in linklist %}
+			<li class="list-group-item list-group-item-action d-inline">
+				<a href="{% pageurl newsitem %}" class="stretched-link">
+					{{ newsitem.title }}
+				</a>
+			</li>
+		{% endfor %}
+		</ul>
+{% endif %}
+

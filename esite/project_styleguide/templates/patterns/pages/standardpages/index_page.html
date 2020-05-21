@@ -1,0 +1,55 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags static %}
+
+{% block content %}
+<section class="section articles container">
+
+    <h1 class="display-2 pt-5">{{ page.title }}</h1>
+
+    {% if page.introduction %}
+        <p class="lead">
+            {{ page.introduction }}
+        </p>
+    {% endif %}
+
+
+    {% if subpages %}
+        <div class="row">
+            <div class="col-12">
+            {% if subpages.object_list.exists %}
+                <div class="card-deck py-2">
+                    {% for subpage in subpages.object_list.specific %}
+                        
+                            <div class="card">
+                                <div class="card-body">        
+                                    {% comment %}                        
+                                        {% if subpage.listing_image %}
+                                            {% image subpage.listing_image fill-450x300 %}
+                                        {% else %}
+                                            {# Add a default image here #}
+                                        {% endif %}
+                                    {% endcomment %}   
+                                    <h2 class="card-title">{% firstof subpage.listing_title subpage.title %}</h5>
+                                    {% if subpage.listing_summary or subpage.introduction %}
+                                        <p class="card-text">{% firstof subpage.listing_summary subpage.introduction %}</p>
+                                    {% endif %}
+                                    <a class="card-link stretched-link" href="{% pageurl subpage %}">Les</a>
+                                </div>
+                            </div>
+                            {% if forloop.counter|divisibleby:3 %}</div><div class="card-deck py-2">{% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {# no items on this page #}
+            {% endif %}
+            </div>
+        </div>
+        {% include "patterns/molecules/pagination/pagination.html" with paginator_page=subpages %}
+
+    {% else %}
+        {# no items on any page #}
+    {% endif %}
+
+</section>
+{% endblock %}
+

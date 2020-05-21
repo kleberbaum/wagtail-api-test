@@ -1,0 +1,7 @@
+{% load wagtailcore_tags wagtailadmin_tags %}
+
+<input class="color no-alpha" {% if value %}value="{{ value }}" {% else %}value="000000" {% endif %} type="text" name="{{ name }}" id="{{ attrs.id }}"
+{% if is_required %}required {% endif %}style="{{ attrs.style }}">
+<!--  <script>
+    $('.color').colorPicker();
+</script> -->

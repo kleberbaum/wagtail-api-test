@@ -1,0 +1,104 @@
+{% extends "patterns/base_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block content %}
+
+        <h1 class="sr-only">helsenorgelab.no</h1>
+
+        {% if page.featured_image %}
+
+            <div class="container hero">
+                <div class="hero-image-container">
+
+                    {% if page.featured_image %}
+                        {% image page.featured_image fill-1400x555 as img %}
+                        <img src="{{ img.url }}" alt="{{ img.alt }}" class="img-fluid" />
+                    {% endif %}
+
+                    <div class="hero-text-block">
+                        <h2 class="display-4">{{ page.hero_title }}</h2>
+
+                        <p>{{ page.hero_introduction }}</p>
+
+                        {% if page.hero_button_link and page.hero_button_text %}
+                            <a class="btn hero-button" href="{% pageurl page.hero_button_link %}">
+                                {{ page.hero_button_text }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <section id="articles" class="container">
+
+            {% if article_top %}
+
+                <h2 class="display-3 pt-5 pb-2 text-primary">{{ articles_title|default:"Artikler" }}</h2>
+
+        
+                {% if article_top.listing_image or article_top.featured_image %}
+                    {% include "patterns/molecules/card/card-page-horizontal.html" with page=article_top %}
+                {% else %}
+                    <div class="jumbotron bg-gradient border-light">
+                        <h2>{% firstof article_top.listing_title article_top.title %}</h2>
+                        <p>{% firstof article_top.listing_summary article_top.introduction %}</p>
+                        <a class="btn btn-primary my-1" href="{% pageurl article_top %}">Les mer</a>
+                    </div>
+                {% endif %}
+
+
+                <div class="py-1">
+                    <div class="card-deck">
+                        {% for article in articles_row_1 %}
+                            {% include "patterns/molecules/card/card-page.html" with page=article %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if articles_link %}
+                    <p class="pt-1"><a href="{% pageurl articles_link %}" class="btn btn-light">{{ articles_linktext|default:"Flere artikler" }}</a></p>
+                {% endif %}
+
+
+            {% endif %}
+
+            {% if featured_row_1 %}
+
+                <h2 class="display-3 text-primary pt-5 pb-2">{{ featured_pages_title|default:"Sider" }}</h2>
+
+                <div class="row py-1">
+                    <div class="card-deck">
+                        {% for page in featured_row_1 %}
+                            {% include "patterns/molecules/card/card-page.html" with page=page.featured_page image=page.image text=page.summary %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row py-1">
+                        <div class="card-deck">
+                            {% for page in featured_row_2 %}
+                                {% include "patterns/molecules/card/card-page.html" with page=page.featured_page image=page.image text=page.summary %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+            {% endif %}
+
+            </section>
+
+
+            {% if news_title %}
+            <section id="news" class="container">
+                <h2 class="display-3 text-primary pt-5 pb-1">{{ news_title|default:"Notert" }}</h2>
+                {% include "patterns/molecules/lists/list_group-links.html" with linklist=latest_news %}
+                
+                {% if news_link %}
+                    <p class="pt-1"><a href="{% pageurl news_link %}" class="btn btn-light">{{ news_linktext|default:"Flere nyheter" }}</a></p>
+                {% endif %} 
+            </section>
+            {% endif %}
+
+
+{% endblock %}

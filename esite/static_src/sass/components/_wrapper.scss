@@ -1,0 +1,35 @@
+.wrapper {
+    &--small {
+        max-width: $wrapper--small;
+        margin: 0 auto;
+    }
+
+    &--medium {
+        max-width: $wrapper--medium;
+        margin: 0 auto;
+    }
+
+    &--large {
+        max-width: $site-width;
+        margin: 0 auto;
+    }
+
+    &--extra-large {
+        max-width: $wrapper--extra-large;
+        margin: 0 auto;
+    }
+
+    &--main {
+        padding: 100px 20px;
+        background-color: $color--white;
+    }
+
+    &--flex {
+        display: flex;
+        flex-direction: column;
+
+        @include media-query(tablet-portrait) {
+            flex-direction: row;
+        }
+    }
+}
