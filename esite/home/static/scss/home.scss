@@ -1,0 +1,170 @@
+/*var********************************************************************************************************************/
+
+$navtop: calc(32.1px + 1em);
+$full-c: rgba(0, 0, 0, 0.63);
+$full-h: calc(100vh - 32.1px - 1em);
+$banner-c: rgba(255, 255, 255, 0.9);
+$about-c: $full-c;
+$about-bc: rgba(168, 0, 0, 0.63);
+$about-bbc: rgb(42, 42, 42);
+$about-tc: rgba(6, 85, 177, 0.63);
+$about-tobc: rgb(255, 255, 255);
+$about-toc: rgba(255, 255, 255, 0.17);
+$about-h: calc(100vh - 271px - 1em);
+$about-min-h: 750px;
+
+/*viewport***************************************************************************************************************/
+
+@media only screen and (min-width: 1440px) {
+  article {
+    transform-origin: top;
+    transform: rotateX(90deg);
+    max-height: 0px;
+    animation: displaynone 700ms ease-in-out forwards 1400ms;
+    &:not(.about) section:not(.animatedBackground){
+      opacity: 0;
+      animation: fadein 700ms ease-in-out forwards 2100ms;
+    }
+  }
+
+  footer {
+    transform-origin: top;
+    max-height: 0px;
+    transform: rotateX(90deg);
+    opacity: 0;
+    animation: displaynone 700ms ease-in forwards 1400ms;
+    *{
+      opacity: 0;
+      animation: fadein 700ms ease-in-out forwards 2100ms;
+    }
+  }
+}
+
+/*font*******************************************************************************************************************/
+
+h1
+{
+  font-family: Origam;
+  font-size: 3em;
+  letter-spacing: 0.2em;
+  line-height: 1.5em;
+  padding-left: 0.2em;
+  color: #000000;
+}
+
+h2 {
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 4em;
+  letter-spacing: 0.6em;
+  padding-left: 0.6em;
+  color: white;
+  background: url(https://erebos.xyz/PIC/kreide.png);
+  background-size: 21px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h3 {
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 1.8em;
+  letter-spacing: 0.6em;
+  padding-left: 0.6em;
+  color: white;
+  background: url(https://erebos.xyz/PIC/kreide.png);
+  background-size: 21px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-family: "Noto Sans";
+  color: black;
+}
+
+h5{
+  display: block;
+  font-size: 1em;
+  margin-bottom: .33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+blink {
+  animation-duration: 1s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(2, start);
+}
+
+/************************************************************************************************************************/
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: "Noto Sans";
+  font-weight: lighter;
+  letter-spacing: 2px;
+  background-attachment: fixed;
+  background-image: url(https://erebos.xyz/PIC/m33.png);
+  font-weight: 500;
+  font-size: calc(17.5px - 0.09vw);
+}
+
+header {
+
+}
+
+nav {
+
+}
+
+article {
+
+}
+
+section {
+  overflow: hidden;
+  min-height: 666px;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+@import "animations";
+@import "pace";
+@import "site-header";
+@import "about";
+@import "motd";
+@import "gallery";
+@import "sharingan";
+@import "community";
+@import "spaceship";
+@import "js";
+
+.party {
+  background-color: transparent;
+  background-image: none;
+}

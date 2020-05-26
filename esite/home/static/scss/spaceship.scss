@@ -1,0 +1,25 @@
+/*section*spaceship-s****************************************************************************************************/
+.spaceship-s {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 500px;
+  background-color: rgba(0, 0, 0, 0.63);
+  div {
+    width: calc(100vw - 50px);
+    height: 400px;
+    img{
+      position: absolute;
+      top: 195px;
+      right: calc(50% - 25px);
+    }
+    &:hover{
+      cursor: url(https://erebos.xyz/PIC/spaceship1.png) 25 55, auto;
+      img{
+        display: none;
+      }
+    }
+  }
+}

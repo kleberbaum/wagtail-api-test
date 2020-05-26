@@ -1,0 +1,347 @@
+/*viewport***************************************************************************************************************/
+
+@media only screen and (max-width: 1440px) {
+  .iris-1 {
+    background-color: #6b6b6b;
+  }
+
+  .iris-2 {
+    background-color: #ffffff;
+  }
+
+  .iris-3 {
+    background-color: #a80000;
+  }
+
+  .mitsudomoe {
+    display: none;
+  }
+
+  .theteam-s{
+    .members{
+      flex-direction: column;
+      .mrow{
+        flex-direction: column;
+        .member{
+          margin: 3%;
+          .profile{
+            flex-direction: row;
+            .pic{
+              display: block;
+              position: relative;
+              transform: rotate(0deg);
+            }
+            .hollow{
+              // box-shadow: 0 0 0 13px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(115,114, 23, 0.8);
+              // background-attachment: fixed;
+              // background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback{
+                position: relative;
+                transform: rotate3d(0,1,0,0deg);
+                color: #000;
+              }
+              .ifront{
+                visibility: hidden;
+                position: absolute;
+              }
+            }
+            &:hover .hollow {
+
+            }
+            &:hover  .member .pic {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pony{
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .sharingan-s {
+    position: sticky;
+    flex-direction: column;
+    top: $navtop;
+    min-height: 100vh;
+  }
+
+  .theteam-s{
+    .members{
+      flex-direction: row;
+      .mrow{
+        flex-direction: row;
+        .member{
+          .profile{
+            flex-direction: column;
+            .pic{
+              display: block;
+              position: relative;
+              transform: rotate(0deg);
+            }
+            .hollow{
+              // box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(115,114, 23, 0.8);
+              // background-attachment: fixed;
+              // background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback{
+                position: relative;
+                transform: rotate3d(0,1,0,0deg);
+                color: #000;
+              }
+              .ifront{
+                visibility: hidden;
+                position: absolute;
+              }
+            }
+            &:hover .hollow {
+
+            }
+            &:hover  .member .pic {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .iris{
+    border: solid;
+    border-width: 0px 0px calc(100vh - 200px) calc(100vw - 200px);
+  }
+}
+
+/*section*sharingan-s****************************************************************************************************/
+
+.sharingan{
+
+}
+
+.sharingan-s {
+  display: flex;
+  flex-direction: column;
+}
+
+.c {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.iris {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.mitsudomoe img {
+  position: absolute;
+  top: -34.04%;
+  left: -28.59%;
+  border: solid;
+  border-width: 78px;
+  border-radius: 152px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.iris-1, .mitsudomoe-1 img {
+  border-color: #6b6b6b;
+}
+
+.iris-2, .mitsudomoe-2 img {
+  border-color: #ffffff;
+}
+
+.iris-3, .mitsudomoe-3 img {
+  border-color: #a80000;
+}
+
+.mitsudomoe {
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  img:hover {
+    animation: rotate 700ms ease-in-out forwards;
+  }
+}
+
+.lorem {
+  position: relative;
+  z-index: 2;
+  padding: 50px 150px;
+  width: 50vw;
+  max-height: 100vh;
+}
+
+.lorem::before {
+  content: url("https://erebos.xyz/PIC/blank4.png");
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  width: 100px;
+  height: 100px;
+  transform: scaleY(-1);
+  filter: blur(0.8px);
+}
+
+.lorem::after {
+  content: url("https://erebos.xyz/PIC/blank4.png");
+  position: absolute;
+  bottom: 50px;
+  right: 90px;
+  width: 100px;
+  height: 100px;
+  transform: scaleX(-1);
+  filter: blur(0.8px);
+}
+
+/*section*nyan-s*********************************************************************************************************/
+.nyan {
+  min-height: 320px;
+  background-attachment: fixed;
+  background-image: url(https://erebos.xyz/PIC/m33.png);
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 320px;
+    h2{
+      z-index: 1;
+    }
+    img{
+      position: absolute;
+      height: 160px;
+      top: 80px;
+      right: 80px;
+    }
+  }
+}
+
+.nyanlink{
+  background-color: rgba(6, 85, 177, 0.63);
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+}
+
+.nyan-background{
+  animation: nyan-background 1000ms linear infinite;
+}
+
+/*section*theteam-s*********************************************************************************************************/
+.theteam-s{
+  background-color: rgb(0, 57, 123);
+  .members{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: calc(100vh - 320px);
+    width: 100%;
+    .mrow{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 10px;
+      .member{
+        flex: 0.1;
+        .profile{
+          top: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          min-width: 100px;
+          .pic{
+            width: 100%;
+            max-width: 210px;
+            img{
+              top: 0px;
+              border-radius: 50%;
+              width: 100%;
+              height: auto;
+              // don't think about the line below
+              margin: 0px 0px -5px 0px;
+            }
+          }
+          .hollow{
+            position: relative;
+            border-radius: 50%;
+            margin: 10px 11%;
+            padding: 1%;
+            transition: all 0.4s ease-in-out;
+            .info{
+              transition: all 0.4s ease-in-out;
+              transform-style: preserve-3d;
+              margin: -2.5%;
+              .iback{
+                display: flex;
+                flex-direction: column;
+                top: 0px;
+                right: 0px;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                max-width: 400px;
+                height: 100%;
+                border-radius: 50%;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                h3{
+                  position: absolute;
+                  top: 0px;
+                }
+                p{
+                  margin-top: 50px;
+                }
+              }
+              .ifront{
+                overflow: hidden;
+                border-radius: 50%;
+                img{
+                  position: relative;
+                  width: 100%;
+                  transform: scale(1.25);
+                  height: auto;
+                  // don't think about the line below
+                  margin: 0px 0px -5px 0px;
+                  -webkit-backface-visibility: hidden;
+                  backface-visibility: hidden;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.thunder{
+  position: absolute;
+  bottom: 95px;
+  right: 270px;
+}
+.pony{
+  z-index: -1;
+  position: absolute;
+  height: 200px;
+  width: auto;
+  bottom: 0px;
+  right: 0px;
+}

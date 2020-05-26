@@ -1,0 +1,1488 @@
+/*var********************************************************************************************************************/
+/*viewport***************************************************************************************************************/
+@media only screen and (min-width: 1440px) {
+  article {
+    transform-origin: top;
+    transform: rotateX(90deg);
+    max-height: 0px;
+    animation: displaynone 700ms ease-in-out forwards 1400ms;
+  }
+  article:not(.about) section:not(.animatedBackground) {
+    opacity: 0;
+    animation: fadein 700ms ease-in-out forwards 2100ms;
+  }
+  footer {
+    transform-origin: top;
+    max-height: 0px;
+    transform: rotateX(90deg);
+    opacity: 0;
+    animation: displaynone 700ms ease-in forwards 1400ms;
+  }
+  footer * {
+    opacity: 0;
+    animation: fadein 700ms ease-in-out forwards 2100ms;
+  }
+}
+
+/*font*******************************************************************************************************************/
+h1 {
+  font-family: Origam;
+  font-size: 3em;
+  letter-spacing: 0.2em;
+  line-height: 1.5em;
+  padding-left: 0.2em;
+  color: #000000;
+}
+
+h2 {
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 4em;
+  letter-spacing: 0.6em;
+  padding-left: 0.6em;
+  color: white;
+  background: url(https://erebos.xyz/PIC/kreide.png);
+  background-size: 21px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h3 {
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 1.8em;
+  letter-spacing: 0.6em;
+  padding-left: 0.6em;
+  color: white;
+  background: url(https://erebos.xyz/PIC/kreide.png);
+  background-size: 21px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-family: "Noto Sans";
+  color: black;
+}
+
+h5 {
+  display: block;
+  font-size: 1em;
+  margin-bottom: 0.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+blink {
+  animation-duration: 1s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(2, start);
+}
+
+/************************************************************************************************************************/
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: "Noto Sans";
+  font-weight: lighter;
+  letter-spacing: 2px;
+  background-attachment: fixed;
+  background-image: url(https://erebos.xyz/PIC/m33.png);
+  font-weight: 500;
+  font-size: calc(17.5px - 0.09vw);
+}
+
+section {
+  overflow: hidden;
+  min-height: 666px;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes displaynone {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    opacity: 1;
+    max-height: 100%;
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes rolldown {
+  0% {
+    opacity: 0;
+    transform: rotateX(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes rollleft {
+  0% {
+    opacity: 0;
+    transform: rotateY(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes showr {
+  0% {
+    right: -50%;
+  }
+  100% {
+    right: 0%;
+    position: relative;
+  }
+}
+
+@keyframes showl {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 0%;
+    position: relative;
+  }
+}
+
+@keyframes showrock {
+  100% {
+    position: relative;
+  }
+}
+
+@keyframes nyan-background {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
+@keyframes blink {
+  80% {
+    visibility: hidden;
+  }
+}
+
+.pace .pace-progress {
+  z-index: 99;
+  position: fixed;
+  top: 0px;
+  z-index: 39;
+  right: 100%;
+  width: 100%;
+  height: 1px;
+  background-image: url(https://erebos.xyz/PIC/progressbar.gif);
+}
+
+@media only screen and (max-width: 1440px) {
+  .navtop {
+    position: absolute;
+  }
+  .b {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .navtop {
+    position: fixed;
+    transform-origin: top;
+    animation: displaynone 700ms ease-in-out;
+  }
+  .navtop a {
+    opacity: 0;
+    animation: fadein 700ms ease-in-out forwards 700ms;
+  }
+  .banner {
+    transform-origin: top;
+    transform: rotateX(90deg);
+    animation: displaynone 700ms ease-in-out forwards 700ms;
+  }
+  .banner .b {
+    display: flex;
+  }
+  .banner * {
+    opacity: 0;
+    animation: fadein 700ms ease-in-out forwards 1400ms;
+  }
+}
+
+.site-header {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  padding-top: calc(32.1px + 1em);
+}
+
+.navtop {
+  z-index: 9999;
+  top: 1px;
+  min-width: 100%;
+  max-height: calc(32.1px + 1em);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+.navtop ul {
+  display: flex;
+}
+.navtop ul.level-1 li {
+  background-image: url(https://erebos.xyz/PIC/gg.gif);
+  list-style: none;
+}
+.navtop ul.level-1 li:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.navtop ul.level-1 li:hover > ul.level-2 {
+  visibility: visible;
+}
+.navtop ul.level-1 li a {
+  display: block;
+  width: 200px;
+  text-align: center;
+  padding: 13px 34px 13px 34px;
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.navtop ul.level-1 li ul.level-2 {
+  z-index: 1;
+  flex-direction: column;
+  position: absolute;
+  visibility: hidden;
+}
+
+.banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-height: 239px;
+  min-height: 200px;
+  height: 16.6vw;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.b {
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  height: 100%;
+}
+
+.full {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+.full .titlecontainer {
+  margin-bottom: 20vh;
+}
+
+.f {
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  height: 100%;
+}
+.f .eule {
+  margin-top: 150px;
+}
+.f .kroko {
+  margin-top: 390px;
+}
+
+.creativetitlecontainer {
+  z-index: 0;
+  border-radius: 100%;
+  transform: rotate(-360deg);
+  transition: box-shadow 0.5s linear, transform 0.5s linear;
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
+.creativetitlecontainer:hover {
+  transform: rotate(360deg);
+  transition: box-shadow 0.5s linear, transform 0.5s linear;
+  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7);
+}
+
+.titlecontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titlespacer {
+  height: 1px;
+  width: 600px;
+  background: url(https://erebos.xyz/PIC/kreide.png);
+  background-size: 21px;
+}
+
+#Izaya {
+  width: 362px;
+  height: 300px;
+}
+
+#Shizuo {
+  width: 370px;
+  height: 300px;
+}
+
+#seal {
+  width: 150px;
+  height: 150px;
+}
+
+/*viewport***************************************************************************************************************/
+@media only screen and (max-width: 1440px) {
+  .boxes {
+    order: 2;
+  }
+  .boxes .box {
+    min-height: 300px;
+  }
+  .boxes .box:nth-child(2) {
+    animation: rollleft 500ms ease-out forwards;
+  }
+  .boxes .box:nth-child(3) {
+    animation: rollleft 500ms ease-out forwards 100ms;
+  }
+  .boxes .box:nth-child(4) {
+    animation: rollleft 500ms ease-out forwards 200ms;
+  }
+  .triangulum {
+    order: 1;
+    max-height: 750px;
+    border: solid;
+    border-width: 20px calc((100vw - 800px) / 2);
+  }
+  .about-s {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  .boxes {
+    order: 1;
+    flex-direction: column;
+    border: solid;
+    border-width: 100px 30px;
+  }
+  .boxes .box:nth-child(2) {
+    animation: rolldown 500ms ease-out forwards;
+  }
+  .boxes .box:nth-child(3) {
+    animation: rolldown 500ms ease-out forwards 100ms;
+  }
+  .boxes .box:nth-child(4) {
+    animation: rolldown 500ms ease-out forwards 200ms;
+  }
+  .triangulum {
+    order: 2;
+    max-width: 50%;
+  }
+  .about-s {
+    top: 0px;
+    height: calc(100vh - 271px - 1em);
+  }
+}
+
+/*section*about-s********************************************************************************************************/
+.about {
+  position: relative;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+
+.about-s {
+  display: flex;
+  position: relative;
+  top: 0px;
+  display: none;
+  justify-content: flex-end;
+  align-items: stretch;
+  perspective: 1000px;
+  min-height: 750px;
+}
+
+input:checked + .about-s {
+  z-index: 10;
+  display: flex;
+}
+
+article input {
+  display: none;
+}
+
+.boxes {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0px;
+  background-color: rgba(168, 0, 0, 0.63);
+  border-color: #2a2a2a;
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+}
+
+.box-title {
+  width: calc(100% - 40px);
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
+  animation: rolldown 500ms ease-out forwards;
+}
+.box-title * {
+  animation: fadein 700ms ease-in-out forwards;
+}
+
+.box {
+  flex: 1;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
+}
+.box * {
+  animation: fadein 700ms ease-in-out forwards;
+}
+
+.triangulum {
+  flex: 2;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(6, 85, 177, 0.63);
+  user-select: none;
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+}
+.triangulum * {
+  user-select: none;
+  -moz-user-select: none;
+}
+
+.oculus-blink {
+  z-index: 99;
+  font-size: 4em;
+  text-align: center;
+}
+
+.oculus-pic {
+  position: absolute;
+  top: 0px;
+  right: -67px;
+  height: 100%;
+  width: 107%;
+  animation: fadein 700ms ease-in-out forwards;
+}
+
+.oculus {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 800px;
+  height: 700px;
+  border: solid white 5px;
+  background-color: rgba(255, 255, 255, 0.17);
+}
+
+.oculus-nav {
+  cursor: pointer;
+  filter: blur(0px);
+  width: 10%;
+  height: 100%;
+}
+.oculus-nav:hover {
+  transform: scale(1.05);
+}
+.oculus-nav img {
+  -webkit-filter: invert(100%);
+  /* Safari */
+  filter: invert(100%);
+}
+
+.prev {
+  top: 0px;
+  left: 0px;
+}
+.prev:hover {
+  box-shadow: inset 20px 0px 30px 0px #ffffff;
+}
+
+.next {
+  top: 0px;
+  right: 0px;
+}
+.next:hover {
+  box-shadow: inset -15px 0px 25px 0px #ffffff;
+}
+
+.prev img {
+  position: absolute;
+  top: calc(50% - 25px);
+  left: 3px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(270deg);
+}
+
+.next img {
+  position: absolute;
+  top: calc(50% - 25px);
+  right: 3px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(90deg);
+}
+
+.oculus-nav-dots {
+  width: 100%;
+  bottom: 9px;
+  height: 13px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-align: center;
+  opacity: 1;
+  animation-name: fadein;
+  animation-duration: 0.7s;
+}
+.oculus-nav-dots .oculus-nav-dot {
+  width: 11px;
+  height: 11px;
+  margin: 0 4px;
+  position: relative;
+  border-radius: 100%;
+  display: inline-flex;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+}
+.oculus-nav-dots .oculus-nav-dot:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+input#about-1:checked + .about-s .oculus .oculus-nav-dots label#about-dot-1,
+input#about-2:checked + .about-s .oculus .oculus-nav-dots label#about-dot-2,
+input#about-3:checked + .about-s .oculus .oculus-nav-dots label#about-dot-3,
+input#about-4:checked + .about-s .oculus .oculus-nav-dots label#about-dot-4,
+input#about-5:checked + .about-s .oculus .oculus-nav-dots label#about-dot-5,
+input#about-6:checked + .about-s .oculus .oculus-nav-dots label#about-dot-6,
+input#about-7:checked + .about-s .oculus .oculus-nav-dots label#about-dot-7,
+input#about-8:checked + .about-s .oculus .oculus-nav-dots label#about-dot-8,
+input#about-9:checked + .about-s .oculus .oculus-nav-dots label#about-dot-9,
+input#about-10:checked + .about-s .oculus .oculus-nav-dots label#about-dot-10,
+input#about-11:checked + .about-s .oculus .oculus-nav-dots label#about-dot-11,
+input#about-12:checked + .about-s .oculus .oculus-nav-dots label#about-dot-12,
+input#about-13:checked + .about-s .oculus .oculus-nav-dots label#about-dot-13 {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/*section*motd**********************************************************************************************************/
+.motd {
+  z-index: 2;
+}
+
+.motd-s {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+
+.gallery {
+  background-color: grey;
+}
+
+.gallery-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-s {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-height: 1400px;
+}
+
+.gallery-s img {
+  margin: 3px;
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.gallery-s img:nth-child(4) {
+  opacity: 0;
+}
+
+/*viewport***************************************************************************************************************/
+@media only screen and (max-width: 1440px) {
+  .iris-1 {
+    background-color: #6b6b6b;
+  }
+  .iris-2 {
+    background-color: #ffffff;
+  }
+  .iris-3 {
+    background-color: #a80000;
+  }
+  .mitsudomoe {
+    display: none;
+  }
+  .theteam-s .members {
+    flex-direction: column;
+  }
+  .theteam-s .members .mrow {
+    flex-direction: column;
+  }
+  .theteam-s .members .mrow .member {
+    margin: 3%;
+  }
+  .theteam-s .members .mrow .member .profile {
+    flex-direction: row;
+  }
+  .theteam-s .members .mrow .member .profile .pic {
+    display: block;
+    position: relative;
+    transform: rotate(0deg);
+  }
+  .theteam-s .members .mrow .member .profile .hollow .iback {
+    position: relative;
+    transform: rotate3d(0, 1, 0, 0deg);
+    color: #000;
+  }
+  .theteam-s .members .mrow .member .profile .hollow .ifront {
+    visibility: hidden;
+    position: absolute;
+  }
+  .theteam-s .members .mrow .member .profile:hover .member .pic {
+    transform: rotate(360deg);
+  }
+  .pony {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .sharingan-s {
+    position: sticky;
+    flex-direction: column;
+    top: calc(32.1px + 1em);
+    min-height: 100vh;
+  }
+  .theteam-s .members {
+    flex-direction: row;
+  }
+  .theteam-s .members .mrow {
+    flex-direction: row;
+  }
+  .theteam-s .members .mrow .member .profile {
+    flex-direction: column;
+  }
+  .theteam-s .members .mrow .member .profile .pic {
+    display: block;
+    position: relative;
+    transform: rotate(0deg);
+  }
+  .theteam-s .members .mrow .member .profile .hollow .iback {
+    position: relative;
+    transform: rotate3d(0, 1, 0, 0deg);
+    color: #000;
+  }
+  .theteam-s .members .mrow .member .profile .hollow .ifront {
+    visibility: hidden;
+    position: absolute;
+  }
+  .theteam-s .members .mrow .member .profile:hover .member .pic {
+    transform: rotate(360deg);
+  }
+  .iris {
+    border: solid;
+    border-width: 0px 0px calc(100vh - 200px) calc(100vw - 200px);
+  }
+}
+
+/*section*sharingan-s****************************************************************************************************/
+.sharingan-s {
+  display: flex;
+  flex-direction: column;
+}
+
+.c {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.iris {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.mitsudomoe img {
+  position: absolute;
+  top: -34.04%;
+  left: -28.59%;
+  border: solid;
+  border-width: 78px;
+  border-radius: 152px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.iris-1,
+.mitsudomoe-1 img {
+  border-color: #6b6b6b;
+}
+
+.iris-2,
+.mitsudomoe-2 img {
+  border-color: #ffffff;
+}
+
+.iris-3,
+.mitsudomoe-3 img {
+  border-color: #a80000;
+}
+
+.mitsudomoe {
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+.mitsudomoe img:hover {
+  animation: rotate 700ms ease-in-out forwards;
+}
+
+.lorem {
+  position: relative;
+  z-index: 2;
+  padding: 50px 150px;
+  width: 50vw;
+  max-height: 100vh;
+}
+
+.lorem::before {
+  content: url("https://erebos.xyz/PIC/blank4.png");
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  width: 100px;
+  height: 100px;
+  transform: scaleY(-1);
+  filter: blur(0.8px);
+}
+
+.lorem::after {
+  content: url("https://erebos.xyz/PIC/blank4.png");
+  position: absolute;
+  bottom: 50px;
+  right: 90px;
+  width: 100px;
+  height: 100px;
+  transform: scaleX(-1);
+  filter: blur(0.8px);
+}
+
+/*section*nyan-s*********************************************************************************************************/
+.nyan {
+  min-height: 320px;
+  background-attachment: fixed;
+  background-image: url(https://erebos.xyz/PIC/m33.png);
+}
+.nyan a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+.nyan a h2 {
+  z-index: 1;
+}
+.nyan a img {
+  position: absolute;
+  height: 160px;
+  top: 80px;
+  right: 80px;
+}
+
+.nyanlink {
+  background-color: rgba(6, 85, 177, 0.63);
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+}
+
+.nyan-background {
+  animation: nyan-background 1000ms linear infinite;
+}
+
+/*section*theteam-s*********************************************************************************************************/
+.theteam-s {
+  background-color: #00397b;
+}
+.theteam-s .members {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: calc(100vh - 320px);
+  width: 100%;
+}
+.theteam-s .members .mrow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 10px;
+}
+.theteam-s .members .mrow .member {
+  flex: 0.1;
+}
+.theteam-s .members .mrow .member .profile {
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 100px;
+}
+.theteam-s .members .mrow .member .profile .pic {
+  width: 100%;
+  max-width: 210px;
+}
+.theteam-s .members .mrow .member .profile .pic img {
+  top: 0px;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  margin: 0px 0px -5px 0px;
+}
+.theteam-s .members .mrow .member .profile .hollow {
+  position: relative;
+  border-radius: 50%;
+  margin: 10px 11%;
+  padding: 1%;
+  transition: all 0.4s ease-in-out;
+}
+.theteam-s .members .mrow .member .profile .hollow .info {
+  transition: all 0.4s ease-in-out;
+  transform-style: preserve-3d;
+  margin: -2.5%;
+}
+.theteam-s .members .mrow .member .profile .hollow .info .iback {
+  display: flex;
+  flex-direction: column;
+  top: 0px;
+  right: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.theteam-s .members .mrow .member .profile .hollow .info .iback h3 {
+  position: absolute;
+  top: 0px;
+}
+.theteam-s .members .mrow .member .profile .hollow .info .iback p {
+  margin-top: 50px;
+}
+.theteam-s .members .mrow .member .profile .hollow .info .ifront {
+  overflow: hidden;
+  border-radius: 50%;
+}
+.theteam-s .members .mrow .member .profile .hollow .info .ifront img {
+  position: relative;
+  width: 100%;
+  transform: scale(1.25);
+  height: auto;
+  margin: 0px 0px -5px 0px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.thunder {
+  position: absolute;
+  bottom: 95px;
+  right: 270px;
+}
+
+.pony {
+  z-index: -1;
+  position: absolute;
+  height: 200px;
+  width: auto;
+  bottom: 0px;
+  right: 0px;
+}
+
+/*viewport***************************************************************************************************************/
+@media only screen and (max-width: 1440px) {
+  .admins-s {
+    flex-direction: column;
+  }
+  .admins-s .admins-h {
+    display: flex;
+    align-items: center;
+    border-bottom: solid #a80000 1px;
+    width: 100vw;
+    height: 100px;
+  }
+  .admins-s .members {
+    flex-direction: row;
+  }
+  .admins-s .members .mrow {
+    flex-direction: column;
+  }
+  .admins-s .members .mrow .member .profile {
+    flex-direction: row;
+  }
+  .admins-s .members .mrow .member .profile .pic {
+    display: none;
+    position: absolute;
+  }
+  .admins-s .members .mrow .member .profile .hollow {
+    box-shadow: 0 0 0 13px rgba(0, 0, 0, 0.2),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+    background-attachment: fixed;
+    background-image: url(https://erebos.xyz/PIC/m33.png);
+  }
+  .admins-s .members .mrow .member .profile .hollow .iback {
+    position: absolute;
+    background-color: #000;
+    transform: rotate3d(0, 1, 0, 180deg);
+    color: #fff;
+    font-size: 25px;
+  }
+  .admins-s .members .mrow .member .profile .hollow .ifront {
+    visibility: visible;
+    position: relative;
+  }
+  .admins-s .members .mrow .member .profile:hover .hollow {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+  }
+  .admins-s .members .mrow .member .profile:hover .hollow .info {
+    transform-style: preserve-3d;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .mods-s {
+    flex-direction: column;
+  }
+  .mods-s .mods-h {
+    display: flex;
+    align-items: center;
+    border-bottom: solid #2a2a2a 1px;
+    width: 100vw;
+    height: 100px;
+  }
+  .mods-s .members {
+    flex-direction: row;
+  }
+  .mods-s .members .mrow {
+    flex-direction: column;
+  }
+  .mods-s .members .mrow .member .profile {
+    flex-direction: row;
+  }
+  .mods-s .members .mrow .member .profile .pic {
+    display: none;
+    position: absolute;
+  }
+  .mods-s .members .mrow .member .profile .hollow {
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+    background-attachment: fixed;
+    background-image: url(https://erebos.xyz/PIC/m33.png);
+  }
+  .mods-s .members .mrow .member .profile .hollow .iback {
+    position: absolute;
+    background-color: #000;
+    transform: rotate3d(0, 1, 0, 180deg);
+    color: #fff;
+    font-size: 25px;
+  }
+  .mods-s .members .mrow .member .profile .hollow .ifront {
+    visibility: visible;
+    position: relative;
+  }
+  .mods-s .members .mrow .member .profile:hover .hollow {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+  }
+  .mods-s .members .mrow .member .profile:hover .hollow .info {
+    transform-style: preserve-3d;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .admins-s {
+    flex-direction: row;
+  }
+  .admins-s .admins-h {
+    display: flex;
+    align-items: center;
+    border-right: solid #a80000 1px;
+    width: 300px;
+    height: 70vh;
+  }
+  .admins-s .members {
+    flex-direction: column;
+  }
+  .admins-s .members .mrow {
+    flex-direction: row;
+  }
+  .admins-s .members .mrow .member .profile {
+    flex-direction: column;
+  }
+  .admins-s .members .mrow .member .profile .pic {
+    display: block;
+    position: absolute;
+  }
+  .admins-s .members .mrow .member .profile .hollow {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.2),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+    background-attachment: fixed;
+    background-image: url(https://erebos.xyz/PIC/m33.png);
+  }
+  .admins-s .members .mrow .member .profile .hollow .iback {
+    position: absolute;
+    background-color: #000;
+    transform: rotate3d(0, 1, 0, 180deg);
+    color: #fff;
+    font-size: 20px;
+  }
+  .admins-s .members .mrow .member .profile .hollow .ifront {
+    visibility: visible;
+    position: relative;
+  }
+  .admins-s .members .mrow .member .profile:hover .hollow {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+  }
+  .admins-s .members .mrow .member .profile:hover .hollow .info {
+    transform-style: preserve-3d;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+  .mods-s {
+    flex-direction: row;
+  }
+  .mods-s .mods-h {
+    display: flex;
+    align-items: center;
+    border-right: solid #2a2a2a 1px;
+    width: 300px;
+    height: 70vh;
+  }
+  .mods-s .members {
+    flex-direction: column;
+  }
+  .mods-s .members .mrow {
+    flex-direction: row;
+  }
+  .mods-s .members .mrow .member .profile {
+    flex-direction: row;
+  }
+  .mods-s .members .mrow .member .profile .pic {
+    display: none;
+    position: absolute;
+  }
+  .mods-s .members .mrow .member .profile .hollow {
+    box-shadow: 0 0 0 13px rgba(0, 0, 0, 0.2),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+    background-attachment: fixed;
+    background-image: url(https://erebos.xyz/PIC/m33.png);
+  }
+  .mods-s .members .mrow .member .profile .hollow .iback {
+    position: absolute;
+    background-color: #000;
+    transform: rotate3d(0, 1, 0, 180deg);
+    color: #fff;
+    font-size: 20px;
+  }
+  .mods-s .members .mrow .member .profile .hollow .ifront {
+    visibility: visible;
+    position: relative;
+  }
+  .mods-s .members .mrow .member .profile:hover .hollow {
+    box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+      inset 0 0 3px rgba(115, 114, 23, 0.8);
+  }
+  .mods-s .members .mrow .member .profile:hover .hollow .info {
+    transform-style: preserve-3d;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+}
+
+/*section*sharingan-s****************************************************************************************************/
+.community-s {
+  display: flex;
+  align-items: center;
+  top: calc(32.1px + 1em);
+  min-height: 100vh;
+}
+
+.admins-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admins-s {
+  background-color: #2a2a2a;
+}
+.admins-s .members {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh - 320px);
+  width: 100%;
+}
+.admins-s .members .mrow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 30px;
+}
+.admins-s .members .mrow .member {
+  flex: 0.1;
+}
+.admins-s .members .mrow .member .profile {
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 100px;
+}
+.admins-s .members .mrow .member .profile .pic {
+  width: 100%;
+}
+.admins-s .members .mrow .member .profile .pic img {
+  top: 0px;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  margin: 0px 0px -5px 0px;
+}
+.admins-s .members .mrow .member .profile .hollow {
+  position: relative;
+  border-radius: 50%;
+  margin: 11%;
+  padding: 1%;
+  transition: all 0.4s ease-in-out;
+}
+.admins-s .members .mrow .member .profile .hollow .info {
+  transition: all 0.4s ease-in-out;
+  transform-style: preserve-3d;
+  margin: -2.5%;
+}
+.admins-s .members .mrow .member .profile .hollow .info .iback {
+  display: flex;
+  flex-direction: column;
+  top: 0px;
+  right: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.admins-s .members .mrow .member .profile .hollow .info .iback h5 {
+  display: inline;
+}
+.admins-s .members .mrow .member .profile .hollow .info .iback p {
+  font-size: 0.5em;
+}
+.admins-s .members .mrow .member .profile .hollow .info .ifront {
+  overflow: hidden;
+  border-radius: 50%;
+}
+.admins-s .members .mrow .member .profile .hollow .info .ifront img {
+  position: relative;
+  width: 100%;
+  transform: scale(1.25);
+  height: auto;
+  margin: 0px 0px -5px 0px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.mods-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mods-s {
+  background-color: #a80000;
+}
+.mods-s .members {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: calc(100vh - 320px);
+  width: 100%;
+}
+.mods-s .members .mrow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 10px;
+}
+.mods-s .members .mrow .member {
+  flex: 0.1;
+}
+.mods-s .members .mrow .member .profile {
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 100px;
+}
+.mods-s .members .mrow .member .profile .pic {
+  width: 100%;
+}
+.mods-s .members .mrow .member .profile .pic img {
+  top: 0px;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  margin: 0px 0px -5px 0px;
+}
+.mods-s .members .mrow .member .profile .hollow {
+  position: relative;
+  border-radius: 50%;
+  margin: 11%;
+  padding: 1%;
+  transition: all 0.4s ease-in-out;
+}
+.mods-s .members .mrow .member .profile .hollow .info {
+  transition: all 0.4s ease-in-out;
+  transform-style: preserve-3d;
+  margin: -2.5%;
+}
+.mods-s .members .mrow .member .profile .hollow .info .iback {
+  display: flex;
+  flex-direction: column;
+  top: 0px;
+  right: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.mods-s .members .mrow .member .profile .hollow .info .ifront {
+  overflow: hidden;
+  border-radius: 50%;
+}
+.mods-s .members .mrow .member .profile .hollow .info .ifront img {
+  position: relative;
+  width: 100%;
+  transform: scale(1.25);
+  height: auto;
+  margin: 0px 0px -5px 0px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/*section*spaceship-s****************************************************************************************************/
+.spaceship-s {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 500px;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+.spaceship-s div {
+  width: calc(100vw - 50px);
+  height: 400px;
+}
+.spaceship-s div img {
+  position: absolute;
+  top: 195px;
+  right: calc(50% - 25px);
+}
+.spaceship-s div:hover {
+  cursor: url(https://erebos.xyz/PIC/spaceship1.png) 25 55, auto;
+}
+.spaceship-s div:hover img {
+  display: none;
+}
+
+/*section*about-s*boom.js*A.P*************************************************************************************************/
+@media only screen and (min-width: 1441px) {
+  .hiding.boxes {
+    position: absolute;
+    left: -100%;
+    width: 50%;
+    min-height: 750px;
+    height: calc(100vh - 271px - 1em);
+  }
+  .hiding.triangulum {
+    position: absolute;
+    right: -100%;
+    width: 50%;
+    min-height: 750px;
+    height: calc(100vh - 271px - 1em);
+  }
+  .showing.boxes {
+    position: absolute;
+    left: -100%;
+    width: 50%;
+    min-height: 750px;
+    height: calc(100vh - 271px - 1em);
+    animation: showl 700ms ease-in-out forwards;
+  }
+  .showing.triangulum {
+    position: absolute;
+    right: -100%;
+    width: 50%;
+    min-height: 750px;
+    height: calc(100vh - 271px - 1em);
+    animation: showr 700ms ease-in-out forwards;
+  }
+  .rock.boxes {
+    position: absolute;
+    left: 0%;
+    width: 50%;
+    min-height: 750px;
+    height: calc(100vh - 271px - 1em);
+    animation: showrock 700ms ease-in-out forwards;
+  }
+}
+
+/************************************************************************************************************************/
+.oldabout {
+  position: absolute;
+  display: flex;
+  background-color: transparent;
+}
+.oldabout .boxes {
+  display: none;
+}
+.oldabout .triangulum {
+  top: 0px;
+  right: 0px;
+  animation: fadeout 700ms ease-in-out forwards;
+}
+
+.party {
+  background-color: transparent;
+  background-image: none;
+}
+
+/*# sourceMappingURL=home.css.map */

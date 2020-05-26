@@ -1,0 +1,28 @@
+.gallery{
+  background-color: grey;
+}
+
+.gallery-h{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-s{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-height: 1400px;
+}
+
+.gallery-s img{
+  margin: 3px;
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.gallery-s img:nth-child(4){
+  opacity: 0;
+}

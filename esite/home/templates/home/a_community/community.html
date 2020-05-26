@@ -1,0 +1,71 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% block community %}
+<article id="community" class="community">
+  {% if a.value.admins.show_admins %}
+  <section id="admins" class="community-s admins-s">
+    <header class="admins-h">
+      <h3>{{ a.value.admins.admins_titel }}</h3>
+    </header>
+    <article class="members">
+      {% for mrow in a.value.admins.members %}
+      <div class="mrow">
+        {% for member in mrow.value %}
+        <div class="member">
+          <div class="profile">
+            <div class="pic">
+              {% image member.value.pic fill-180x180 alt=member.value.name %}
+            </div>
+            <div class="hollow">
+              <div class="info">
+                <div class="ifront">
+                  {% image member.value.pic fill-180x180 alt=member.value.name %}
+                </div>
+                <div class="iback">
+                  <h5 class="charc">{{ member.value.name }}</h5>
+                  <p>{{ member.value.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </article>
+  </section>
+  {% endif %}
+  {% if a.value.mods.show_mods %}
+  <section id="mods" class="community-s mods-s">
+    <header class="mods-h">
+      <h3>{{ a.value.mods.mods_titel }}</h3>
+    </header>
+    <article class="members">
+      {% for mrow in a.value.mods.members %}
+      <div class="mrow">
+        {% for member in mrow.value %}
+        <div class="member">
+          <div class="profile">
+            <div class="pic">
+              {% image member.value.pic fill-180x180 alt=member.value.name %}
+            </div>
+            <div class="hollow">
+              <div class="info">
+                <div class="ifront">
+                  {% image member.value.pic fill-180x180 alt=member.value.name %}
+                </div>
+                <div class="iback">
+                  <h5 class="charc">{{ member.value.name }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </article>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,261 @@
+/*viewport***************************************************************************************************************/
+
+@media only screen and (max-width: 1440px) {
+  .boxes {
+    order: 2;
+    .box {
+      min-height: 300px;
+      &:nth-child(2) {
+        animation: rollleft 500ms ease-out forwards;
+      }
+      &:nth-child(3) {
+        animation: rollleft 500ms ease-out forwards 100ms;
+      }
+      &:nth-child(4) {
+        animation: rollleft 500ms ease-out forwards 200ms;
+      }
+    }
+  }
+
+  .triangulum {
+    order: 1;
+    max-height: 750px;
+    border: solid;
+    border-width: 20px calc((100vw - 800px) / 2);
+  }
+
+  .about-s {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  .boxes {
+    order: 1;
+    flex-direction: column;
+    border: solid;
+    border-width: 100px 30px;
+    .box {
+      &:nth-child(2) {
+        animation: rolldown 500ms ease-out forwards;
+      }
+      &:nth-child(3) {
+        animation: rolldown 500ms ease-out forwards 100ms;
+      }
+      &:nth-child(4) {
+        animation: rolldown 500ms ease-out forwards 200ms;
+      }
+    }
+  }
+
+  .triangulum {
+    order: 2;
+    max-width: 50%;
+  }
+
+  .about-s {
+    top: 0px;
+    height: $about-h;
+  }
+}
+
+/*section*about-s********************************************************************************************************/
+.about {
+  position: relative;
+  z-index: 0;
+  background-color: $about-c;
+}
+
+.about-s {
+  display: flex;
+  position: relative;
+  top: 0px;
+  display: none;
+  justify-content: flex-end;
+  align-items: stretch;
+  perspective: 1000px;
+  min-height: $about-min-h;
+}
+
+input:checked + .about-s {
+  z-index: 10;
+  display: flex;
+}
+
+article input {
+  display: none;
+}
+
+.boxes {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0px;
+  background-color: $about-bc;
+  border-color: $about-bbc;
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+}
+
+.box-title {
+  width: calc(100% - 40px);
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
+  animation: rolldown 500ms ease-out forwards;
+  * {
+    animation: fadein 700ms ease-in-out forwards;
+  }
+}
+
+.box {
+  flex: 1;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
+  * {
+    animation: fadein 700ms ease-in-out forwards;
+  }
+}
+
+.triangulum {
+  flex: 2;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $about-tc;
+  user-select: none;
+  background-image: url(https://erebos.xyz/PIC/grid2.png);
+  * {
+    user-select: none;
+    -moz-user-select: none;
+  }
+}
+
+.oculus-blink {
+  z-index: 99;
+  font-size: 4em;
+  text-align: center;
+}
+
+.oculus-pic {
+  position: absolute;
+  top: 0px;
+  right: -67px;
+  height: 100%;
+  width: 107%;
+  animation: fadein 700ms ease-in-out forwards;
+}
+
+.oculus {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 800px;
+  height: 700px;
+  border: solid $about-tobc 5px;
+  background-color: $about-toc;
+}
+
+.oculus-nav {
+  cursor: pointer;
+  filter: blur(0px);
+  width: 10%;
+  height: 100%;
+  &:hover {
+    transform: scale(1.05);
+  }
+  img {
+    -webkit-filter: invert(100%); /* Safari */
+    filter: invert(100%);
+  }
+}
+
+.prev {
+  top: 0px;
+  left: 0px;
+  &:hover {
+    box-shadow: inset 20px 0px 30px 0px #ffffff;
+  }
+}
+
+.next {
+  top: 0px;
+  right: 0px;
+  &:hover {
+    box-shadow: inset -15px 0px 25px 0px #ffffff;
+  }
+}
+
+.prev img {
+  position: absolute;
+  top: calc(50% - 25px);
+  left: 3px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(270deg);
+}
+
+.next img {
+  position: absolute;
+  top: calc(50% - 25px);
+  right: 3px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(90deg);
+}
+
+.oculus-nav-dots {
+  width: 100%;
+  bottom: 9px;
+  height: 13px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-align: center;
+  opacity: 1;
+  animation-name: fadein;
+  animation-duration: 0.7s;
+  .oculus-nav-dot {
+    width: 11px;
+    height: 11px;
+    margin: 0 4px;
+    position: relative;
+    border-radius: 100%;
+    display: inline-flex;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+input {
+  &#about-1:checked + .about-s .oculus .oculus-nav-dots label#about-dot-1,
+  &#about-2:checked + .about-s .oculus .oculus-nav-dots label#about-dot-2,
+  &#about-3:checked + .about-s .oculus .oculus-nav-dots label#about-dot-3,
+  &#about-4:checked + .about-s .oculus .oculus-nav-dots label#about-dot-4,
+  &#about-5:checked + .about-s .oculus .oculus-nav-dots label#about-dot-5,
+  &#about-6:checked + .about-s .oculus .oculus-nav-dots label#about-dot-6,
+  &#about-7:checked + .about-s .oculus .oculus-nav-dots label#about-dot-7,
+  &#about-8:checked + .about-s .oculus .oculus-nav-dots label#about-dot-8,
+  &#about-9:checked + .about-s .oculus .oculus-nav-dots label#about-dot-9,
+  &#about-10:checked + .about-s .oculus .oculus-nav-dots label#about-dot-10,
+  &#about-11:checked + .about-s .oculus .oculus-nav-dots label#about-dot-11,
+  &#about-12:checked + .about-s .oculus .oculus-nav-dots label#about-dot-12,
+  &#about-13:checked + .about-s .oculus .oculus-nav-dots label#about-dot-13 {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}

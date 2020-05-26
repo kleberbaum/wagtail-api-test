@@ -1,0 +1,14 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% block gallery %}
+<article class="gallery">
+  <header>
+    <h2 class="gallery-h">{{ a.value.title }}</h2>
+  </header>
+  <section class="gallery-s">
+    {% for image in a.value.gallery %}
+      {% image image.value original class="oculus-pic" alt="erebos_network"%}
+    {% endfor %}
+  </section>
+</article>
+{% endblock %}

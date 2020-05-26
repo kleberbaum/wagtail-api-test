@@ -1,0 +1,21 @@
+{
+    "sass.enabled": false,
+    "sass.compiler": "libsass",
+    "path": {
+        "static/scss/home.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "includePaths": [],
+                "outputDir": "../css",
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": true,
+            "useTabChar": false,
+            "tabSize": 4,
+            "spaceUnits": 2,
+            "fonts.fontSize": "13px"
+        }
+    }
+}

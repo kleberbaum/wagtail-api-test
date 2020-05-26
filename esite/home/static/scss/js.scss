@@ -1,0 +1,68 @@
+/*section*about-s*boom.js*A.P*************************************************************************************************/
+@media only screen and (min-width: 1441px) {
+
+  .hiding.boxes {
+    position: absolute;
+    left: -100%;
+    width: 50%;
+    min-height: $about-min-h;
+    height: $about-h;
+  }
+
+  .hiding.triangulum {
+    position: absolute;
+    right: -100%;
+    width: 50%;
+    min-height: $about-min-h;
+    height: $about-h;
+  }
+
+  .about-s {
+
+  }
+
+  .showing.boxes {
+    position: absolute;
+    left: -100%;
+    width: 50%;
+    min-height: $about-min-h;
+    height: $about-h;
+    animation: showl 700ms ease-in-out forwards;
+  }
+
+  .showing.triangulum {
+    position: absolute;
+    right: -100%;
+    width: 50%;
+    min-height: $about-min-h;
+    height: $about-h;
+    animation: showr 700ms ease-in-out forwards;
+  }
+
+  .rock.boxes{
+    position: absolute;
+    left: 0%;
+    width: 50%;
+    min-height: $about-min-h;
+    height: $about-h;
+    animation: showrock 700ms ease-in-out forwards;
+  }
+}
+/************************************************************************************************************************/
+
+.oldabout{
+  position: absolute;
+  display: flex;
+  background-color: transparent;
+  .boxes {
+    display: none;
+  }
+  .triangulum {
+    top: 0px;
+    right: 0px;
+    animation: fadeout 700ms ease-in-out forwards;
+  }
+  .oculus-pic {
+
+  }
+}

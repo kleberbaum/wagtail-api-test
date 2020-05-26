@@ -1,0 +1,94 @@
+{% load wagtailcore_tags %} {% load wagtailimages_tags %} {% block sharingan %}
+<article id="projekte" class="sharingan">
+  {% if a.value.sharingan.show_projects %}
+  <section id="ts3.party" class="sharingan-s sharingan-1">
+    <div class="c">
+      <div class="iris iris-1">
+        <div class="mitsudomoe mitsudomoe-1">
+          <img src="https://erebos.xyz/PIC/mitsudomoe1.png" alt="mitsudomoe1" />
+        </div>
+      </div>
+      <div class="lorem">
+        {{ a.value.sharingan.sharingan_1 | richtext }}
+      </div>
+    </div>
+  </section>
+  <section id="nize.host" class="sharingan-s sharingan-2">
+    <div class="c">
+      <div class="iris iris-2">
+        <div class="mitsudomoe mitsudomoe-2">
+          <img src="https://erebos.xyz/PIC/mitsudomoe2.png" alt="mitsudomoe2" />
+        </div>
+      </div>
+      <div class="lorem">
+        {{ a.value.sharingan.sharingan_2 | richtext }}
+      </div>
+    </div>
+  </section>
+  <section id="chat.erebos" class="sharingan-s sharingan-3">
+    <div class="c">
+      <div class="iris iris-3">
+        <div class="mitsudomoe mitsudomoe-3">
+          <img src="https://erebos.xyz/PIC/mitsudomoe3.png" alt="mitsudomoe3" />
+        </div>
+      </div>
+      <div class="lorem">
+        {{ a.value.sharingan.sharingan_3 | richtext }}
+      </div>
+    </div>
+  </section>
+  {% endif %} {% if a.value.team.show_team %}
+  <section id="theteam" class="sharingan-s theteam-s">
+    <header class="nyan">
+      <a
+        class="nyanlink"
+        href="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+        target="_blank"
+      >
+        <h3>{{ a.value.team.nyan_titel }}</h3>
+        <img src="https://erebos.xyz/PIC/nyan.gif" alt="nyan" />
+      </a>
+      <audio id="nyanaudio" preload="auto">
+        <source src="https://erebos.xyz/AUDIO/nyan.mp3" type="audio/mpeg" />
+        <source src="https://erebos.xyz/AUDIO/party.ogg" type="audio/ogg" />
+      </audio>
+    </header>
+    <div class="members">
+      <div class="mrow">
+        {% for member in a.value.team.members %}
+        <div class="member">
+          <div class="profile">
+            <div class="pic">
+              {% image member.value.pic fill-200x200 alt=member.value.name %}
+            </div>
+            <div class="hollow">
+              <div class="info">
+                <div class="ifront">
+                  {% image member.value.pic fill-200x200 alt=member.value.name
+                  %}
+                </div>
+                <div class="iback">
+                  <h3>{{ member.value.name }}</h3>
+                  <p>{{ member.value.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <blink class="thunder"
+      ><a href="https://twitter.com/ThunderboltOP" target="_blank"
+        >Alex -&gt;</a
+      ></blink
+    >
+    <img
+      class="pony"
+      src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8b62a5c9-aa21-4cca-a925-938b185e1180/d3bo0dx-acff85b0-7ee1-4113-acdf-34fd29d5ea5a.png/v1/fill/w_1280,h_967,strp/rainbow_dash_salute_by_atomicgreymon_d3bo0dx-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTY3IiwicGF0aCI6IlwvZlwvOGI2MmE1YzktYWEyMS00Y2NhLWE5MjUtOTM4YjE4NWUxMTgwXC9kM2JvMGR4LWFjZmY4NWIwLTdlZTEtNDExMy1hY2RmLTM0ZmQyOWQ1ZWE1YS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.IqAIWyYoFjeHvlCONs8Y7gw0r1Z8ZkQltPujWlp-yCg"
+      alt="photo rainbow_dash_salute_by_atomicgreymon-d3bo0dx"
+    />
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

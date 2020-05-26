@@ -152,6 +152,9 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -169,7 +172,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 #> CORS origin
 # If True, the whitelist will not be used and all origins will be accepted.
@@ -249,8 +251,8 @@ GRAPHQL_JWT = {
 API_APPS = {
     "home": "",
     "profile": "",
-    "registration": "",
-    "survey": "",
+#    "registration": "",
+#    "survey": "",
     "event": "",
 }
 

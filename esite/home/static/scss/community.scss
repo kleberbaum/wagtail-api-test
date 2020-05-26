@@ -1,0 +1,399 @@
+/*viewport***************************************************************************************************************/
+
+@media only screen and (max-width: 1440px) {
+  .admins-s {
+    flex-direction: column;
+    .admins-h {
+      display: flex;
+      align-items: center;
+      border-bottom: solid #a80000 1px;
+      width: 100vw;
+      height: 100px;
+    }
+    .members {
+      flex-direction: row;
+      .mrow {
+        flex-direction: column;
+        .member {
+          .profile {
+            flex-direction: row;
+            .pic {
+              display: none;
+              position: absolute;
+            }
+            .hollow {
+              box-shadow: 0 0 0 13px rgba(0, 0, 0, 0.2),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+              background-attachment: fixed;
+              background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback {
+                position: absolute;
+                background-color: #000;
+                transform: rotate3d(0, 1, 0, 180deg);
+                color: #fff;
+                font-size: 25px;
+              }
+              .ifront {
+                visibility: visible;
+                position: relative;
+              }
+            }
+            &:hover .hollow {
+              box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+            }
+            &:hover .hollow .info {
+              transform-style: preserve-3d;
+              transform: rotate3d(0, 1, 0, -180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+  .mods-s {
+    flex-direction: column;
+    .mods-h {
+      display: flex;
+      align-items: center;
+      border-bottom: solid #2a2a2a 1px;
+      width: 100vw;
+      height: 100px;
+    }
+    .members {
+      flex-direction: row;
+      .mrow {
+        flex-direction: column;
+        .member {
+          .profile {
+            flex-direction: row;
+            .pic {
+              display: none;
+              position: absolute;
+            }
+            .hollow {
+              box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+              background-attachment: fixed;
+              background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback {
+                position: absolute;
+                background-color: #000;
+                transform: rotate3d(0, 1, 0, 180deg);
+                color: #fff;
+                font-size: 25px;
+              }
+              .ifront {
+                visibility: visible;
+                position: relative;
+              }
+            }
+            &:hover .hollow {
+              box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+            }
+            &:hover .hollow .info {
+              transform-style: preserve-3d;
+              transform: rotate3d(0, 1, 0, -180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .admins-s {
+    flex-direction: row;
+    .admins-h {
+      display: flex;
+      align-items: center;
+      border-right: solid #a80000 1px;
+      width: 300px;
+      height: 70vh;
+    }
+    .members {
+      flex-direction: column;
+      .mrow {
+        flex-direction: row;
+        .member {
+          .profile {
+            flex-direction: column;
+            .pic {
+              display: block;
+              position: absolute;
+            }
+            .hollow {
+              box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.2),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+              background-attachment: fixed;
+              background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback {
+                position: absolute;
+                background-color: #000;
+                transform: rotate3d(0, 1, 0, 180deg);
+                color: #fff;
+                font-size: 20px;
+              }
+              .ifront {
+                visibility: visible;
+                position: relative;
+              }
+            }
+            &:hover .hollow {
+              box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+            }
+            &:hover .hollow .info {
+              transform-style: preserve-3d;
+              transform: rotate3d(0, 1, 0, -180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+  .mods-s {
+    flex-direction: row;
+    .mods-h {
+      display: flex;
+      align-items: center;
+      border-right: solid #2a2a2a 1px;
+      width: 300px;
+      height: 70vh;
+    }
+    .members {
+      flex-direction: column;
+      .mrow {
+        flex-direction: row;
+        .member {
+          .profile {
+            flex-direction: row;
+            .pic {
+              display: none;
+              position: absolute;
+            }
+            .hollow {
+              box-shadow: 0 0 0 13px rgba(0, 0, 0, 0.2),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+              background-attachment: fixed;
+              background-image: url(https://erebos.xyz/PIC/m33.png);
+              .iback {
+                position: absolute;
+                background-color: #000;
+                transform: rotate3d(0, 1, 0, 180deg);
+                color: #fff;
+                font-size: 20px;
+              }
+              .ifront {
+                visibility: visible;
+                position: relative;
+              }
+            }
+            &:hover .hollow {
+              box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3),
+                inset 0 0 3px rgba(115, 114, 23, 0.8);
+            }
+            &:hover .hollow .info {
+              transform-style: preserve-3d;
+              transform: rotate3d(0, 1, 0, -180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*section*sharingan-s****************************************************************************************************/
+
+.community {
+}
+
+.community-s {
+  display: flex;
+  align-items: center;
+  top: $navtop;
+  min-height: 100vh;
+}
+
+.admins-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admins-s {
+  background-color: #2a2a2a;
+  .members {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: calc(100vh - 320px);
+    width: 100%;
+    .mrow {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 30px;
+      .member {
+        flex: 0.1;
+        .profile {
+          top: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          min-width: 100px;
+          .pic {
+            width: 100%;
+            img {
+              top: 0px;
+              border-radius: 50%;
+              width: 100%;
+              height: auto;
+              // don't think about the line below
+              margin: 0px 0px -5px 0px;
+            }
+          }
+          .hollow {
+            position: relative;
+            border-radius: 50%;
+            margin: 11%;
+            padding: 1%;
+            transition: all 0.4s ease-in-out;
+            .info {
+              transition: all 0.4s ease-in-out;
+              transform-style: preserve-3d;
+              margin: -2.5%;
+              .iback {
+                display: flex;
+                flex-direction: column;
+                top: 0px;
+                right: 0px;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                h5 {
+                  display: inline;
+                }
+                p {
+                  font-size: 0.5em;
+                }
+              }
+              .ifront {
+                overflow: hidden;
+                border-radius: 50%;
+                img {
+                  position: relative;
+                  width: 100%;
+                  transform: scale(1.25);
+                  height: auto;
+                  // don't think about the line below
+                  margin: 0px 0px -5px 0px;
+                  -webkit-backface-visibility: hidden;
+                  backface-visibility: hidden;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.mods-h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mods-s {
+  background-color: #a80000;
+  .members {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: calc(100vh - 320px);
+    width: 100%;
+    .mrow {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 10px;
+      .member {
+        flex: 0.1;
+        .profile {
+          top: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          min-width: 100px;
+          .pic {
+            width: 100%;
+            img {
+              top: 0px;
+              border-radius: 50%;
+              width: 100%;
+              height: auto;
+              // don't think about the line below
+              margin: 0px 0px -5px 0px;
+            }
+          }
+          .hollow {
+            position: relative;
+            border-radius: 50%;
+            margin: 11%;
+            padding: 1%;
+            transition: all 0.4s ease-in-out;
+            .info {
+              transition: all 0.4s ease-in-out;
+              transform-style: preserve-3d;
+              margin: -2.5%;
+              .iback {
+                display: flex;
+                flex-direction: column;
+                top: 0px;
+                right: 0px;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                h3 {
+                }
+                p {
+                }
+              }
+              .ifront {
+                overflow: hidden;
+                border-radius: 50%;
+                img {
+                  position: relative;
+                  width: 100%;
+                  transform: scale(1.25);
+                  height: auto;
+                  // don't think about the line below
+                  margin: 0px 0px -5px 0px;
+                  -webkit-backface-visibility: hidden;
+                  backface-visibility: hidden;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

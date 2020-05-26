@@ -1,0 +1,41 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% block about %}
+<article class="about">
+  {% for block in a.value.about_pages %}
+      <input type="radio" name="radioabout" id="about-{{ forloop.counter }}" {% if forloop.counter == 1 %}checked{% endif %}>
+      <section class="about-s about-{{ forloop.counter }}">
+        <div class="boxes">
+          {% for box in block.value.boxes %}
+            {% if box.block_type == 'title' %}
+                <div class="box-title">
+                    <h4>{{ box.value }}</h4>
+                </div>
+            {% else %}
+                <div class="box">
+                    {% include_block box %}
+                </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="triangulum">
+          {% if block.value.use_image %}
+            {% image block.value.image original class="oculus-pic" alt="erebos_network"%}
+          {% endif %}
+          <div class="oculus">
+            <label for="about-{% if forloop.counter == 1 %}{{ a.value.about_pages|length }}{% else %}{{ forloop.counter|add:"-1"}}{% endif %}" class="oculus-nav prev"><img src="https://erebos.xyz/PIC/it.png" alt="<"></label>
+            {% if not block.value.use_image %}
+              <blink class="oculus-blink">{{ block.value.blink }}</blink>
+            {% endif %}
+            <label for="about-{% if forloop.counter == a.value.about_pages|length %}1{% else %}{{ forloop.counter|add:"+1"}}{% endif %}" class="oculus-nav next"><img src="https://erebos.xyz/PIC/it.png" alt=">"></label>
+            <div class="oculus-nav-dots">
+              {% for block in a.value.about_pages %}
+                <label for="about-{{ forloop.counter }}" class="oculus-nav-dot" id="about-dot-{{ forloop.counter }}"></label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </section>
+  {% endfor %}
+</article>
+{% endblock %}

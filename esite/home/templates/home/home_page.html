@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="https://erebos.xyz/CSS/origam.css">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Noto%20Sans:400,700">
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+<script type="text/javascript" src="{% static 'js/nojs.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pace.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/kazuhikoarase.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/qrcodegenerator.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/boom.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/seal.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/oculus.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/nyan.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/scc.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/charc.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/party.js' %}"></script>
+{% endblock %}
+{% block content %}
+<header class="site-header">
+  {% include "home/h_navtop/navtop.html" %}
+  {% for h in page.header %}
+    {% if h.block_type == 'hfull' %}
+      {% include "home/h_full/full.html" %}
+    {% elif h.block_type == 'hbanner' %}
+      {% include "home/h_banner/banner.html" %}
+    {% endif %}
+  {% endfor %}
+</header>
+  {% for a in page.article %}
+    {% if a.block_type == 'aabout' %}
+      {% include "home/a_about/a_about.html" %}
+    {% elif a.block_type == 'amotd' %}
+      {% include "home/a_motd/motd.html" %}
+    {% elif a.block_type == 'asharingan' %}
+      {% include "home/a_sharingan/sharingan.html" %}
+    {% elif a.block_type == 'acommunity' %}
+      {% include "home/a_community/community.html" %}
+    {% elif a.block_type == 'aspaceship' %}
+      {% include "home/a_spaceship/spaceship.html" %}
+    {% elif a.block_type == 'agallery' %}
+      {% include "home/a_gallery/gallery.html" %}
+    {% elif a.block_type == 'aabout' %}
+      {% include "home/a_gallery/gallery.html" %}
+    {% elif a.block_type == 'aabout' %}
+      {% include "home/a_gallery/gallery.html" %}
+    {% elif a.block_type == 'aabout' %}
+      {% include "home/a_gallery/gallery.html" %}
+    {% elif a.block_type == 'acode' %}
+      {{ a.value.code }}
+    {% endif %}
+  {% endfor %}
+  {% include "home/s_party/partyaudio.html" %}
+  {% include "home/f_impressum/impressum.html" %}
+  {% block script %}
+  {% endblock %}
+{% endblock %}

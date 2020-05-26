@@ -77,7 +77,7 @@ def create_schema():
         query=Query,
         mutation=Mutations,
         subscription=Subscription,
-        #types=list(registry.models.values()),
+        types=list(registry.models.values()),
         auto_camelcase=getattr(settings, 'API_AUTO_CAMELCASE', True)
     )
 
