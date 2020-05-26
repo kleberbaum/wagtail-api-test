@@ -28,6 +28,7 @@ from esite.api.models import (
     GraphQLEmbed,
     GraphQLSnippet,
     GraphQLBoolean,
+    GraphQLSnippet,
 )
 
 #from grapple.models import (
@@ -151,6 +152,7 @@ class _S_AmotdBlock(blocks.StructBlock):
 
     graphql_fields = [GraphQLString("modt"), ]
 
+
 @register_streamfield_block
 class Asharingan_Team_MemberBlock(blocks.StructBlock):
     pic = ImageChooserBlock(blank=True, classname="full")
@@ -189,6 +191,75 @@ class _S_AsharinganBlock(blocks.StructBlock):
 
     graphql_fields = [GraphQLStreamfield("sharingans"), GraphQLStreamfield("teams"), ]
 
+@register_streamfield_block
+class Acommunity_Mod_MemberBlock(blocks.StructBlock):
+    pic = ImageChooserBlock(blank=True, classname="full")
+    name = blocks.CharBlock(blank=True, max_length=16, default="", classname="full")
+
+    graphql_fields = [GraphQLImage("pic"), GraphQLString("name"), ]
+
+@register_streamfield_block
+class Acommunity_ModBlock(blocks.StructBlock):
+    show_mods = blocks.BooleanBlock(default=True, help_text="Whether the mods will be shown on this block", required=False, classname="full")
+    mods_title = blocks.CharBlock(max_length=16, default="Mods", classname="full")
+    members = blocks.StreamBlock([
+        mrow = blocks.StreamBlock([
+            member = Acommunity_Mod_MemberBlock(null=True, blank=False, icon='user')
+        ], icon='group')
+    ], required=False)
+
+    graphql_fields = [GraphQLBoolean("show_mods"), GraphQLString("mods_title"), GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
+
+@register_streamfield_block
+class Acommunity_Admin_MemberBlock(blocks.StructBlock):
+    pic = ImageChooserBlock(blank=True, classname="full")
+    name = blocks.CharBlock(blank=True, max_length=16, default="", classname="full")
+    description = blocks.CharBlock(max_length=128, default="", classname="full")
+
+    graphql_fields = [GraphQLImage("pic"), GraphQLString("name"), GraphQLString("description"), ]
+
+@register_streamfield_block
+class Acommunity_AdminBlock(blocks.StructBlock):
+    show_admins = blocks.BooleanBlock(default=True, help_text="Whether the admins will be shown on this block", required=False, classname="full")
+    admins_title = blocks.CharBlock(max_length=16, default="Admins", classname="full")
+    members = blocks.StreamBlock([,
+        mrow = blocks.StreamBlock([
+            member = Acommunity_Admin_MemberBlock(null=True, blank=False , icon='user')
+        ], icon='group',)
+    ])
+
+    graphql_fields = [GraphQLBoolean("show_admins"), GraphQLString("admins_title"), GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
+    
+
+@register_streamfield_block
+class _S_AcommunityBlock(blocks.StructBlock):
+    admins = blocks.StreamBlock([
+        admin = Acommunity_AdminBlock(null=True, blank=False)
+    ])
+    mods = blocks.StreamBlock([
+        mod = Acommunity_ModBlock(null=True, blank=False)
+    ])
+
+    graphql_fields = [GraphQLStreamfield("admins"), GraphQLStreamfield("mods"), ]
+
+@register_streamfield_block
+class _S_AspaceshipBlock(blocks.StructBlock):
+
+@register_streamfield_block
+class _S_AgalleryBlock(blocks.StructBlock):
+    title = blocks.CharBlock(blank=True, classname="full")
+    gallery = blocks.StreamBlock([
+        image = ImageChooserBlock(blank=True, classname="full"),
+    ])
+
+    graphql_fields = [GraphQLString("title"), GraphQLStreamfield("gallery"), GraphQLImage("image"), ]
+
+@register_streamfield_block
+class _S_AcodeBlock(blocks.StructBlock):
+    code = blocks.RawHTMLBlock(blank=True, classname="full")
+
+    graphql_fields = [GraphQLSnippet("code"), ]
+
 class About_CardBlock(blocks.StructBlock):
     card_image = ImageChooserBlock(null=True, blank=False, help_text="Office-fitting image")
     card_head = blocks.CharBlock(null=True, blank=False, classname="full title", help_text="The bold header text at the frontpage slider")
@@ -224,7 +295,11 @@ class HomePage(Page):
     sections = StreamField([
       ('s_about', _S_AboutBlock(null=True, blank=False, icon='radio-empty')),
       ('s_amodt', _S_AmotdBlock(null=True, blank=False, icon='pilcrow')),
-      ('s_asharingan', _S_AsharinganBlock(null=True, blank=False, icon='view'))
+      ('s_asharingan', _S_AsharinganBlock(null=True, blank=False, icon='view')),
+      ('s_acommunity', _S_AcommunityBlock(null=True, blank=False, icon='group')),
+      ('s_aspaceship', _S_AspaceshipBlock(null=True, blank=False, icon='pick')),
+      ('s_agallery', _S_AgalleryBlock(null=True, blank=False, icon='grip')),
+      ('s_acode', _S_AcodeBlock(null=True, blank=False, icon='code')
     ], null=True, blank=False)
 # header = StreamField([
 #      ('hbanner', blocks.StructBlock([
