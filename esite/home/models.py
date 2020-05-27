@@ -202,13 +202,13 @@ class Acommunity_Mod_MemberBlock(blocks.StructBlock):
 class Acommunity_ModBlock(blocks.StructBlock):
     show_mods = blocks.BooleanBlock(default=True, help_text="Whether the mods will be shown on this block", required=False, classname="full")
     mods_title = blocks.CharBlock(max_length=16, default="Mods", classname="full")
-    members = blocks.StreamBlock([
-        mrow = blocks.StreamBlock([
-            member = Acommunity_Mod_MemberBlock(null=True, blank=False, icon='user')
-        ], icon='group')
-    ], required=False)
+    # members = blocks.StreamBlock([
+    #     mrow = blocks.StreamBlock([
+    #         member = Acommunity_Mod_MemberBlock(null=True, blank=False, icon='user')
+    #     ], icon='group', )
+    # ], required=False)
 
-    graphql_fields = [GraphQLBoolean("show_mods"), GraphQLString("mods_title"), GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
+    graphql_fields = [GraphQLBoolean("show_mods"), GraphQLString("mods_title"), ]#GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
 
 @register_streamfield_block
 class Acommunity_Admin_MemberBlock(blocks.StructBlock):
@@ -222,34 +222,35 @@ class Acommunity_Admin_MemberBlock(blocks.StructBlock):
 class Acommunity_AdminBlock(blocks.StructBlock):
     show_admins = blocks.BooleanBlock(default=True, help_text="Whether the admins will be shown on this block", required=False, classname="full")
     admins_title = blocks.CharBlock(max_length=16, default="Admins", classname="full")
-    members = blocks.StreamBlock([,
-        mrow = blocks.StreamBlock([
-            member = Acommunity_Admin_MemberBlock(null=True, blank=False , icon='user')
-        ], icon='group',)
-    ])
+    # members = blocks.StreamBlock([,
+    #     mrow = blocks.StreamBlock([
+    #         member = Acommunity_Admin_MemberBlock(null=True, blank=False , icon='user')
+    #     ], icon='group',)
+    # ])
 
-    graphql_fields = [GraphQLBoolean("show_admins"), GraphQLString("admins_title"), GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
+    graphql_fields = [GraphQLBoolean("show_admins"), GraphQLString("admins_title"), ]#GraphQLStreamfield("members"), GraphQLStreamfield("mrow"), ]
     
 
 @register_streamfield_block
 class _S_AcommunityBlock(blocks.StructBlock):
     admins = blocks.StreamBlock([
-        admin = Acommunity_AdminBlock(null=True, blank=False)
+        ('admin', Acommunity_AdminBlock(null=True, blank=False))
     ])
     mods = blocks.StreamBlock([
-        mod = Acommunity_ModBlock(null=True, blank=False)
+        ('mod', Acommunity_ModBlock(null=True, blank=False))
     ])
 
     graphql_fields = [GraphQLStreamfield("admins"), GraphQLStreamfield("mods"), ]
 
 @register_streamfield_block
 class _S_AspaceshipBlock(blocks.StructBlock):
+    pass
 
 @register_streamfield_block
 class _S_AgalleryBlock(blocks.StructBlock):
     title = blocks.CharBlock(blank=True, classname="full")
     gallery = blocks.StreamBlock([
-        image = ImageChooserBlock(blank=True, classname="full"),
+        ('image', ImageChooserBlock(blank=True, classname="full")),
     ])
 
     graphql_fields = [GraphQLString("title"), GraphQLStreamfield("gallery"), GraphQLImage("image"), ]
@@ -258,7 +259,7 @@ class _S_AgalleryBlock(blocks.StructBlock):
 class _S_AcodeBlock(blocks.StructBlock):
     code = blocks.RawHTMLBlock(blank=True, classname="full")
 
-    graphql_fields = [GraphQLSnippet("code"), ]
+    graphql_fields = [GraphQLString("code"), ]
 
 class About_CardBlock(blocks.StructBlock):
     card_image = ImageChooserBlock(null=True, blank=False, help_text="Office-fitting image")
@@ -299,8 +300,8 @@ class HomePage(Page):
       ('s_acommunity', _S_AcommunityBlock(null=True, blank=False, icon='group')),
       ('s_aspaceship', _S_AspaceshipBlock(null=True, blank=False, icon='pick')),
       ('s_agallery', _S_AgalleryBlock(null=True, blank=False, icon='grip')),
-      ('s_acode', _S_AcodeBlock(null=True, blank=False, icon='code')
-    ], null=True, blank=False)
+      ('s_acode', _S_AcodeBlock(null=True, blank=False, icon='code'))
+    ], null=True, blank=False, )
 # header = StreamField([
 #      ('hbanner', blocks.StructBlock([
 #        ('banner', blocks.CharBlock(blank=True, classname="full title", icon='title'))
