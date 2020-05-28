@@ -25,7 +25,7 @@ class Event(models.Model):
     is_active = models.BooleanField(null=False, blank=False, default=True)
     assoc_sessions = models.ForeignKey(Session,
                                    null=True,
-                                   blank=False,
+                                   blank=True,
                                    on_delete=models.SET_NULL,
                                    related_name='+',
                                    verbose_name="Associated Session")
