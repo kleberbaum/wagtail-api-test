@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'esite.caching',
     'esite.gift',
     'esite.event',
+    'esite.session',
     #'esite.jwtauth',
     #'esite.charm',
     #'esite.articles',

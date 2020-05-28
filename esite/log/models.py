@@ -6,8 +6,8 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel, MultiFieldPanel, FieldPanel
 
-#from .blocks import UserChooserBlock
-from .widgets import UserChooser
+from esite.user.blocks import UserChooserBlock
+from esite.user.widgets import UserChooser
 
 
 class Workpackage(models.Model):
@@ -65,9 +65,9 @@ class Workpackage(models.Model):
                                    related_name='+',
                                    verbose_name="Associated User")
 
-    # assoc_user_list = StreamField([
-    #     ('userchooser', UserChooserBlock(help_text="A user associated with the workpackage"))
-    # ], null=True, blank=True)
+    assoc_user_list = StreamField([
+        ('userchooser', UserChooserBlock(help_text="A user associated with the workpackage"))
+    ], null=True, blank=True)
 
     panels = [
         FieldPanel('pid'),
@@ -79,7 +79,7 @@ class Workpackage(models.Model):
         FieldPanel('starttime'),
         FieldPanel('realtime'),
         FieldPanel('assoc_user', widget=UserChooser),
-        #StreamFieldPanel(assoc_user_list)
+        StreamFieldPanel("assoc_user_list")
     ]
 
     def __str__(self):

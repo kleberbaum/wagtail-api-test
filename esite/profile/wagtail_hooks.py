@@ -3,13 +3,6 @@ from wagtail.admin.rich_text.converters.html_to_contentstate import InlineStyleE
 from wagtail.core import hooks
 
 
-from .views import UserChooserViewSet
-
-
-@hooks.register('register_admin_viewset')
-def register_user_chooser_viewset():
-    return UserChooserViewSet('user_chooser', url_prefix='user-chooser')
-
 # 1. Use the register_rich_text_features hook.
 @hooks.register('register_rich_text_features')
 def register_strikethrough_feature(features):
