@@ -21,6 +21,21 @@ from modelcluster.fields import ParentalKey
 from esite.colorfield.fields import ColorField, ColorAlphaField
 from esite.colorfield.blocks import ColorBlock, ColorAlphaBlock, GradientColorBlock
 
+from esite.api.helpers import register_streamfield_block
+
+from esite.api.models import (
+    GraphQLForeignKey,
+    GraphQLField,
+    GraphQLStreamfield,
+    GraphQLImage,
+    GraphQLString,
+    GraphQLCollection,
+    GraphQLEmbed,
+    GraphQLSnippet,
+    GraphQLBoolean,
+    GraphQLSnippet,
+)
+
 #from grapple.models import (
 #    GraphQLField,
 #    GraphQLString,

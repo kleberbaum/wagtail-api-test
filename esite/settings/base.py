@@ -252,7 +252,7 @@ GRAPHQL_JWT = {
 API_APPS = {
     "home": "",
     "profile": "",
-#    "registration": "",
+    "registration": "",
 #    "survey": "",
     "event": "",
 }

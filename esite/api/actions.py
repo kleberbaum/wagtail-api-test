@@ -9,6 +9,7 @@ from django.db.models.query import QuerySet
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from wagtail.contrib.settings.models import BaseSetting
+from wagtail.contrib.forms.models import AbstractForm
 from wagtail.core.models import Page as WagtailPage
 from wagtail.core.blocks import BaseBlock, RichTextBlock
 from wagtail.documents.models import AbstractDocument
@@ -84,7 +85,9 @@ def register_model(cls: type, type_prefix: str):
 
     # Pass class to correct type creator.
     if cls is not None:
-        if issubclass(cls, WagtailPage):
+        if issubclass(cls, AbstractForm):
+            register_form_model(cls, type_prefix)
+        elif issubclass(cls, WagtailPage):
             register_page_model(cls, type_prefix)
         elif issubclass(cls, AbstractDocument):
             register_documment_model(cls, type_prefix)
@@ -338,6 +341,10 @@ def build_streamfield_type(
         setattr(graphql_node, name, MethodType(method, graphql_node))
 
     return graphql_node
+
+
+def register_form_model(cls: Type[AbstractForm], type_prefix: str):
+    pass
 
 
 def register_page_model(cls: Type[WagtailPage], type_prefix: str):

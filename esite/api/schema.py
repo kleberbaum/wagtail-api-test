@@ -34,13 +34,13 @@ def create_schema():
 
     import esite.registration.schema
     import esite.event.schema
-    import esite.Session.schema
+    #import esite.session.schema
     from esite.caching.schema import CacheUser
 
     class Query(
         esite.registration.schema.Query,
         esite.event.schema.Query,
-        esite.Session.schema.Ouery,
+        #esite.session.schema.Ouery,
         graphene.ObjectType,
         PagesQuery(),
         ImagesQuery(),
