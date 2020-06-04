@@ -257,7 +257,7 @@ API_APPS = {
     "event": "",
 }
 
-ASGI_APPLICATION = "asgi.channel_layer"
+ASGI_APPLICATION = "esite.api.asgi.channel_layer"
 CHANNELS_WS_PROTOCOLS = ["graphql-ws"]
 CHANNEL_LAYERS = {
     "default": {
