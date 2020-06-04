@@ -8,7 +8,7 @@ MAINTAINER Florian Kleber <kleberbaum@erebos.xyz>
 
 # Add custom environment variables needed by Django or your settings file here:
 ENV DJANGO_DEBUG=on \
-	DJANGO_SETTINGS_MODULE=esite.settings.development
+	DJANGO_SETTINGS_MODULE=esite.settings.production
 
 # The uWSGI configuration (customize as needed):
 ENV UWSGI_VIRTUALENV=/venv \
