@@ -37,7 +37,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #> Set Base_Url
 # Set the base url, needed to acces wagtail.
 # See https://docs.wagtail.io/en/v0.8.10/howto/settings.html
-BASE_URL = 'http://localhost:8000'
+BASE_URL = 'http://5.45.97.228:8000/'
 
 #> Telegram backend
 # The backend to use for sending telegrams.
