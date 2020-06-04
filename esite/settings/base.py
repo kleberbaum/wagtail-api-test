@@ -98,7 +98,7 @@ INSTALLED_APPS = [
     #"grapple",
     "graphene_django",
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
-    #"channels",
+    "channels",
     'wagtailfontawesome',
 
     # Django core apps
@@ -257,6 +257,14 @@ API_APPS = {
     "event": "",
 }
 
+ASGI_APPLICATION = "asgi.channel_layer"
+CHANNELS_WS_PROTOCOLS = ["graphql-ws"]
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "esite.api.urls.channel_routing",
+    }
+}
 
 #> Password validation
 # The list of validators that are used to check the strength of passwords, see

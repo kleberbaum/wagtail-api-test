@@ -103,13 +103,22 @@ class ProfilePage(Page):
 
     graphql_fields = [
         GraphQLStreamfield("main"),
-        GraphQLString("username"),
-        GraphQLString("firstName"),
-        GraphQLString("lastName"),
-        GraphQLString("email"),
-        GraphQLString("verified"),
-        GraphQLString("platformData"),
         GraphQLString("sources"),
+        GraphQLString("platform_data"),
+        GraphQLString("verified"),
+        GraphQLString("available_for_hire"),
+        GraphQLString("username"),
+        GraphQLString("first_name"),
+        GraphQLString("last_name"),
+        GraphQLString("telephone"),
+        GraphQLString("address"),
+        GraphQLString("postal_code"),
+        GraphQLString("city"),
+        GraphQLString("country"),
+        GraphQLString("newsletter"),
+        GraphQLString("email"),
+        GraphQLString("website"),
+        GraphQLString("company"),
         GraphQLString("bids"),
         GraphQLString("tids")
     ]
