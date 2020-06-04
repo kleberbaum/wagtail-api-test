@@ -103,6 +103,15 @@ class ProfilePage(Page):
 
     graphql_fields = [
         GraphQLStreamfield("main"),
+        GraphQLString("username"),
+        GraphQLString("firstName"),
+        GraphQLString("lastName"),
+        GraphQLString("email"),
+        GraphQLString("verified"),
+        GraphQLString("platformData"),
+        GraphQLString("sources"),
+        GraphQLString("bids"),
+        GraphQLString("tids")
     ]
 
     data_panels = [
